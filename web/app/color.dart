@@ -34,17 +34,17 @@ Color rgb(r, g, b, [a = 1]) {
   return new Color(r / 255, g / 255, b / 255, a);
 }
 
-final White = rgb(255, 255, 255);
-final Black = rgb(0, 0, 0);
+final Color White = rgb(255, 255, 255);
+final Color Black = rgb(0, 0, 0);
 
 // http://flatuicolors.com/
-final SeaGreen = rgb(26, 188, 156);
-final Green = rgb(46, 204, 113);
-final Blue = rgb(52, 152, 219);
-final Violet = rgb(155, 89, 182);
-final Yellow = rgb(241, 196, 15);
-final Orange = rgb(230, 126, 34);
-final Red = rgb(231, 76, 60);
-final Asphalt = rgb(52, 73, 94);
-final Cloudy = rgb(236, 240, 241);
-final Gray = rgb(149, 165, 166);
+final Color SeaGreen = rgb(26, 188, 156);
+final Color Green = rgb(46, 204, 113);
+final Color Blue = rgb(52, 152, 219);
+final Color Violet = rgb(155, 89, 182);
+final Color Yellow = rgb(241, 196, 15);
+final Color Orange = rgb(230, 126, 34);
+final Color Red = rgb(231, 76, 60);
+final Color Asphalt = rgb(52, 73, 94);
+final Color Cloudy = rgb(236, 240, 241);
+final Color Gray = rgb(149, 165, 166);
