@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'game.dart';
 
-main() async {
+main() {
   final CanvasElement canvas = querySelector('#game');
   final game = new Game(canvas);
   num time = new DateTime.now().millisecondsSinceEpoch;
