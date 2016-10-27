@@ -34,6 +34,7 @@ class Column {
 
 class Notefield {
   static final Color backgroundColor = Black.opacity(0.8);
+  static final Color borderColor = White.opacity(0.8);
   static final num columnCount = 6;
   static final num leftOffset = 220;
   static final num noteHeight = 24;
@@ -62,7 +63,7 @@ class Notefield {
 
   drawBorders() {
     canvas.context2D
-      ..fillStyle = White.opacity(0.7)
+      ..fillStyle = borderColor
       ..fillRect(leftOffset - 4, 0, 4, canvas.height)
       ..fillRect(leftOffset + totalWidth, 0, 4, canvas.height);
   }
