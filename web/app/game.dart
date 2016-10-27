@@ -24,10 +24,5 @@ class Game {
 
     bg.draw();
     notefield.draw();
-
-    canvas.context2D
-      ..font = '32px Roboto'
-      ..fillStyle = 'black'
-      ..fillText(bg.shapes.length.toString(), 10, 50);
   }
 }
