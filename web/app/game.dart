@@ -4,6 +4,22 @@ import 'bg_animation.dart';
 import 'notefield.dart';
 import 'note.dart';
 
+enum Judgement { absolute, perfect, great, miss, none }
+
+class TimingWindow {
+  static const absolute = 25 / 1000;
+  static const perfect = 80 / 1000;
+  static const great = 140 / 1000;
+
+  static Judgement judge(num timing) {
+    timing = timing.abs();
+    if (timing <= absolute) return Judgement.absolute;
+    if (timing <= perfect) return Judgement.perfect;
+    if (timing <= great) return Judgement.great;
+    return Judgement.none;
+  }
+}
+
 class Game {
   static final List<KeyCode> keybinds = [
     KeyCode.A,
@@ -20,17 +36,16 @@ class Game {
   BackgroundAnimation bg;
   Notefield notefield;
 
-
   Game() {
     bg = new BackgroundAnimation();
     notefield = new Notefield();
 
     notes.add(new Note(0 / 2, 0));
-    notes.add(new Note(1 / 2, 0));
-    notes.add(new Note(2 / 2, 0));
-    notes.add(new Note(3 / 2, 0));
-    notes.add(new Note(4 / 2, 0));
-    notes.add(new Note(5 / 2, 0));
+    notes.add(new Note(1 / 2, 1));
+    notes.add(new Note(2 / 2, 2));
+    notes.add(new Note(3 / 2, 3));
+    notes.add(new Note(4 / 2, 4));
+    notes.add(new Note(5 / 2, 5));
   }
 
   update(num dt) {
@@ -41,10 +56,13 @@ class Game {
   keydown(KeyboardEvent event) {
     for (final note in notes) {
       if (note.state == NoteState.active
-      && event.keyCode == keybinds[note.column]
-      && (note.time - songTime).abs() < 0.1) {
-        note.state = NoteState.hit;
-        break;
+      && event.keyCode == keybinds[note.column]) {
+        final judgement = TimingWindow.judge(songTime - note.time);
+        if (judgement != Judgement.none) {
+          note.state = NoteState.hit;
+          print(judgement);
+          break;
+        }
       }
     }
   }
