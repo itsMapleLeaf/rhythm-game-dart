@@ -2,7 +2,7 @@ import 'dart:math';
 
 final random = new Random();
 
-/// Returns an integer between min and max (inclusive)
+/// Returns an integer between min and max (exclusive)
 int intRange(min, max) => random.nextInt(max) + min;
 
 /// Returns a double between min and max
