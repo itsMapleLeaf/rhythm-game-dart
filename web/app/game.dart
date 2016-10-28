@@ -58,12 +58,43 @@ class Tween {
 }
 
 class JudgementAnimation {
-  Color color;
-  String text;
-  final bounce = new Tween(30, 0, 0.3);
+  static final bounceNormal = new Tween(30, 0, 0.3);
+  static final bounceMiss = new Tween(0, 30, 1);
 
-  play() {
+  Tween bounce = bounceNormal;
+
+  Color color = White;
+  String text = '';
+
+  play(Judgement judgement) {
     bounce.reset();
+
+    switch (judgement) {
+      case Judgement.absolute:
+        text = 'ABSOLUTE';
+        color = Blue;
+        break;
+      case Judgement.perfect:
+        text = 'PERFECT';
+        color = Orange;
+        break;
+      case Judgement.great:
+        text = 'GREAT';
+        color = Green;
+        break;
+      case Judgement.miss:
+        text = 'BREAK';
+        color = Red;
+        break;
+      default:
+        text = '';
+    }
+
+    if (judgement == Judgement.miss) {
+      bounce = bounceMiss;
+    } else {
+      bounce = bounceNormal;
+    }
   }
 
   update(num dt) {
@@ -76,8 +107,8 @@ class JudgementAnimation {
     canvas.context2D
       ..font = '64px Roboto'
       ..textAlign = 'center'
-      ..fillStyle = 'black'
-      ..fillText('TEST', 300, canvas.height / 2 + bounce.value);
+      ..fillStyle = color
+      ..fillText(text, 300, canvas.height / 2 + bounce.value);
   }
 }
 
@@ -123,7 +154,7 @@ class Game {
         final judgement = TimingWindow.judge(songTime - note.time);
         if (judgement != Judgement.none) {
           note.state = NoteState.hit;
-          judgeanim.play();
+          judgeanim.play(judgement);
           break;
         }
       }
