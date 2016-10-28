@@ -13,8 +13,8 @@ main() async {
   while (true) {
     final now = await window.animationFrame;
     final elapsed = now - time;
+    time = now;
     game.update(elapsed / 1000);
     game.draw();
-    time = now;
   }
 }
