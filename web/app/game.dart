@@ -145,6 +145,14 @@ class Game {
     songTime += dt;
     bg.update(dt);
     judgeanim.update(dt);
+
+    for (final note in notes) {
+      if (note.state == NoteState.active
+      && songTime > note.time + TimingWindow.great) {
+        note.state = NoteState.missed;
+        judgeanim.play(Judgement.miss);
+      }
+    }
   }
 
   keydown(KeyboardEvent event) {
