@@ -1,15 +1,25 @@
 import 'dart:html';
 
 import 'color.dart';
+import 'note.dart';
+
+const num columnCount = 6;
+const num keyHeight = 100;
+const num leftOffset = 220;
+const num noteHeight = 24;
+const num receptorHeight = 24;
+final Color backgroundColor = Black.opacity(0.8);
+final Color borderColor = White.opacity(0.8);
+final List<Color> columnColors = [Yellow, White, Violet, White, Violet, White];
+final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
+final num noteSpacing = 200;
+final num totalWidth = columnWidths.reduce((a, b) => a + b);
 
 class Column {
-  static final keyHeight = 100;
-  static final receptorHeight = 24;
-
   final CanvasElement canvas;
+  final Color color;
   final num left;
   final num width;
-  final Color color;
 
   Column(this.canvas, this.left, this.width, this.color);
 
@@ -33,15 +43,6 @@ class Column {
 }
 
 class Notefield {
-  static final Color backgroundColor = Black.opacity(0.8);
-  static final Color borderColor = White.opacity(0.8);
-  static final num columnCount = 6;
-  static final num leftOffset = 220;
-  static final num noteHeight = 24;
-  static final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
-  static final List<Color> columnColors = [Yellow, White, Violet, White, Violet, White];
-  static final num totalWidth = columnWidths.reduce((a, b) => a + b);
-
   final List<Column> columns = [];
   final CanvasElement canvas;
 
@@ -68,11 +69,24 @@ class Notefield {
       ..fillRect(leftOffset + totalWidth, 0, 4, canvas.height);
   }
 
-  draw() {
+  drawNotes(List<Note> notes, num songTime) {
+    for (final note in notes) {
+      final time = note.time;
+      final col = note.column;
+      final x = columns[col].left;
+      final y = canvas.height - keyHeight - time * noteSpacing + songTime * noteSpacing;
+      final width = columns[col].width;
+      final color = columns[col].color;
+      note.draw(canvas, x, y, width, color);
+    }
+  }
+
+  draw(List<Note> notes, num songTime) {
     drawBackground();
     drawBorders();
     columns.forEach((col) => col.drawBacklight());
     columns.forEach((col) => col.drawReceptor());
+    drawNotes(notes, songTime);
     columns.forEach((col) => col.drawKey());
   }
 }
