@@ -52,9 +52,7 @@ class Game {
 
   keydown(KeyboardEvent event) {
     final index = keybinds.indexOf(event.keyCode);
-    if (index > -1) {
-      notefield.columns[index].pressed = true;
-    }
+    notefield.setColumnPressed(index, true);
 
     for (final note in notes) {
       if (note.state == NoteState.active
@@ -71,9 +69,7 @@ class Game {
 
   keyup(KeyboardEvent event) {
     final index = keybinds.indexOf(event.keyCode);
-    if (index > -1) {
-      notefield.columns[index].pressed = false;
-    }
+    notefield.setColumnPressed(index, false);
   }
 
   draw() {

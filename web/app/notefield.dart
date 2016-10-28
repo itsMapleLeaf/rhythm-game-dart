@@ -28,6 +28,12 @@ class Notefield {
     }
   }
 
+  setColumnPressed(int col, bool pressed) {
+    if (col >= 0 && col < columnCount) {
+      columns[col].pressed = pressed;
+    }
+  }
+
   update(num dt) {
     columns.forEach((col) => col.update(dt));
   }
