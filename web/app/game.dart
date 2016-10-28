@@ -1,6 +1,8 @@
 import 'dart:html';
+import 'dart:math';
 
 import 'bg_animation.dart';
+import 'color.dart';
 import 'notefield.dart';
 import 'note.dart';
 
@@ -20,6 +22,65 @@ class TimingWindow {
   }
 }
 
+typedef num EasingFunction(num delta);
+
+class Tween {
+  static final EasingFunction linear = (num delta) => delta;
+  static final EasingFunction quadOut = (num delta) => pow(delta, 1/2);
+
+  final num start;
+  final num end;
+  final num duration;
+  final num delay;
+  EasingFunction easing;
+  num time = 0;
+
+  Tween(this.start, this.end, this.duration, [this.delay = 0, this.easing]) {
+    easing ??= quadOut;
+  }
+
+  setTime(num _time) {
+    time = _time;
+  }
+
+  update(num dt) {
+    setTime(time + dt);
+  }
+
+  reset() {
+    setTime(0);
+  }
+
+  num get value {
+    final delta = ((time - delay) / duration).clamp(0, 1);
+    return start + (end - start) * easing(delta);
+  }
+}
+
+class JudgementAnimation {
+  Color color;
+  String text;
+  final bounce = new Tween(30, 0, 0.3);
+
+  play() {
+    bounce.reset();
+  }
+
+  update(num dt) {
+    bounce.update(dt);
+  }
+
+  draw() {
+    final CanvasElement canvas = querySelector('#game');
+
+    canvas.context2D
+      ..font = '64px Roboto'
+      ..textAlign = 'center'
+      ..fillStyle = 'black'
+      ..fillText('TEST', 300, canvas.height / 2 + bounce.value);
+  }
+}
+
 class Game {
   static final List<KeyCode> keybinds = [
     KeyCode.A,
@@ -31,6 +92,7 @@ class Game {
   ];
 
   final List<Note> notes = [];
+  final judgeanim = new JudgementAnimation();
 
   num songTime = -3;
   BackgroundAnimation bg;
@@ -51,6 +113,7 @@ class Game {
   update(num dt) {
     songTime += dt;
     bg.update(dt);
+    judgeanim.update(dt);
   }
 
   keydown(KeyboardEvent event) {
@@ -60,7 +123,7 @@ class Game {
         final judgement = TimingWindow.judge(songTime - note.time);
         if (judgement != Judgement.none) {
           note.state = NoteState.hit;
-          print(judgement);
+          judgeanim.play();
           break;
         }
       }
@@ -78,5 +141,6 @@ class Game {
 
     bg.draw();
     notefield.draw(notes, songTime);
+    judgeanim.draw();
   }
 }
