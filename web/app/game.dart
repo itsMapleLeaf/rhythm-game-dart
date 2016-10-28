@@ -41,22 +41,24 @@ class Game {
     judgeanim.update(dt);
     notefield.update(dt);
 
-    for (final note in notes) {
-      if (note.state == NoteState.active
-      && songTime > note.time + TimingWindow.great) {
-        note.state = NoteState.missed;
-        judgeanim.play(Judgement.miss);
-      }
-    }
+    checkMisses();
   }
 
   keydown(KeyboardEvent event) {
     final index = keybinds.indexOf(event.keyCode);
     notefield.setColumnPressed(index, true);
+    checkTaps(index);
+  }
 
+  keyup(KeyboardEvent event) {
+    final index = keybinds.indexOf(event.keyCode);
+    notefield.setColumnPressed(index, false);
+  }
+
+  checkTaps(int col) {
     for (final note in notes) {
       if (note.state == NoteState.active
-      && event.keyCode == keybinds[note.column]) {
+      && note.column == col) {
         final judgement = TimingWindow.judge(songTime - note.time);
         if (judgement != Judgement.none) {
           note.state = NoteState.hit;
@@ -67,9 +69,14 @@ class Game {
     }
   }
 
-  keyup(KeyboardEvent event) {
-    final index = keybinds.indexOf(event.keyCode);
-    notefield.setColumnPressed(index, false);
+  checkMisses() {
+    for (final note in notes) {
+      if (note.state == NoteState.active
+      && songTime > note.time + TimingWindow.great) {
+        note.state = NoteState.missed;
+        judgeanim.play(Judgement.miss);
+      }
+    }
   }
 
   draw() {
