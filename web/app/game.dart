@@ -59,15 +59,20 @@ class Tween {
 
 class JudgementAnimation {
   static final bounceNormal = new Tween(30, 0, 0.3);
-  static final bounceMiss = new Tween(0, 30, 1);
+  static final bounceMiss = new Tween(0, 40, 1, 0, Tween.linear);
+
+  static final fadeNormal = new Tween(1, 0, 0.2, 1);
+  static final fadeMiss = new Tween(1, 0, 0.5, 0.5);
 
   Tween bounce = bounceNormal;
+  Tween fade = fadeNormal;
 
   Color color = White;
   String text = '';
 
   play(Judgement judgement) {
     bounce.reset();
+    fade.reset();
 
     switch (judgement) {
       case Judgement.absolute:
@@ -92,13 +97,16 @@ class JudgementAnimation {
 
     if (judgement == Judgement.miss) {
       bounce = bounceMiss;
+      fade = fadeMiss;
     } else {
       bounce = bounceNormal;
+      fade = fadeNormal;
     }
   }
 
   update(num dt) {
     bounce.update(dt);
+    fade.update(dt);
   }
 
   draw() {
@@ -107,7 +115,7 @@ class JudgementAnimation {
     canvas.context2D
       ..font = '64px Unica One'
       ..textAlign = 'center'
-      ..fillStyle = color
+      ..fillStyle = color.opacity(fade.value)
       ..fillText(text, 300, canvas.height / 2 + bounce.value);
   }
 }
