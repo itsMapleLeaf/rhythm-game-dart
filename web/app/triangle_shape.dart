@@ -12,11 +12,13 @@ class TriangleShape {
     pos = new Point(x, y);
   }
 
-  draw(CanvasElement canvas) {
+  draw() {
+    final CanvasElement canvas = querySelector('#game');
     final ctx = canvas.context2D;
 
-    ctx.fillStyle = color;
-    ctx.beginPath();
+    ctx
+      ..fillStyle = color
+      ..beginPath();
 
     for (num i = 0; i < 3; i++) {
       final angle = i / 3 * PI * 2;

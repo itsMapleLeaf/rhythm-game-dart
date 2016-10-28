@@ -3,8 +3,7 @@ import 'dart:html';
 import 'game.dart';
 
 main() async {
-  final CanvasElement canvas = querySelector('#game');
-  final game = new Game(canvas);
+  final game = new Game();
 
   window.onKeyDown.forEach(game.keydown);
   window.onKeyUp.forEach(game.keyup);

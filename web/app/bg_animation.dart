@@ -7,7 +7,6 @@ import 'random.dart';
 import 'triangle_shape.dart';
 
 class BackgroundAnimation {
-  final CanvasElement canvas;
   final List<TriangleShape> shapes = [];
   final Clock clock = new Clock(0.1);
 
@@ -20,9 +19,10 @@ class BackgroundAnimation {
     Violet,
   ];
 
-  BackgroundAnimation(this.canvas);
+  BackgroundAnimation();
 
   addShape() {
+    final CanvasElement canvas = querySelector('#game');
     final x = intRange(0, canvas.width);
     final y = canvas.height + 100;
     final size = doubleRange(3, 6);
@@ -45,7 +45,7 @@ class BackgroundAnimation {
 
   draw() {
     for (final shape in shapes) {
-      shape.draw(canvas);
+      shape.draw();
     }
   }
 }

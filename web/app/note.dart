@@ -10,7 +10,8 @@ class Note {
 
   Note(this.time, this.column);
 
-  draw(CanvasElement canvas, num x, num y, num width, Color color) {
+  draw(num x, num y, num width, Color color) {
+    final CanvasElement canvas = querySelector('#game');
     canvas.context2D
       ..fillStyle = color
       ..fillRect(x, y, width, -noteHeight);

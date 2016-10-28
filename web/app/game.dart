@@ -5,15 +5,14 @@ import 'notefield.dart';
 import 'note.dart';
 
 class Game {
-  final CanvasElement canvas;
   final List<Note> notes = [];
   num songTime = -3;
   BackgroundAnimation bg;
   Notefield notefield;
 
-  Game(this.canvas) {
-    bg = new BackgroundAnimation(canvas);
-    notefield = new Notefield(canvas);
+  Game() {
+    bg = new BackgroundAnimation();
+    notefield = new Notefield();
 
     notes.add(new Note(0 / 2, 0));
     notes.add(new Note(1 / 2, 1));
@@ -33,6 +32,8 @@ class Game {
   keydown(KeyboardEvent event) {}
 
   draw() {
+    final CanvasElement canvas = querySelector('#game');
+
     canvas.context2D
       ..fillStyle = 'white'
       ..fillRect(0, 0, canvas.width, canvas.height);

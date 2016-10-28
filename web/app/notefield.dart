@@ -17,12 +17,13 @@ final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
 final num totalWidth = columnWidths.reduce((a, b) => a + b);
 
 class Column {
-  final CanvasElement canvas;
+  static final CanvasElement canvas = querySelector('#game');
+
   final Color color;
   final num left;
   final num width;
 
-  Column(this.canvas, this.left, this.width, this.color);
+  Column(this.left, this.width, this.color);
 
   drawBacklight() {
     canvas.context2D
@@ -44,15 +45,16 @@ class Column {
 }
 
 class Notefield {
-  final List<Column> columns = [];
-  final CanvasElement canvas;
+  static final CanvasElement canvas = querySelector('#game');
 
-  Notefield(this.canvas) {
+  final List<Column> columns = [];
+
+  Notefield() {
     num left = leftOffset;
     for (num i = 0; i < columnCount; i++) {
       final width = columnWidths[i];
       final color = columnColors[i];
-      columns.add(new Column(canvas, left, width, color));
+      columns.add(new Column(left, width, color));
       left += width;
     }
   }
@@ -78,7 +80,7 @@ class Notefield {
       final y = canvas.height - keyHeight - time * noteSpacing + songTime * noteSpacing;
       final width = columns[col].width;
       final color = columns[col].color;
-      note.draw(canvas, x, y, width, color);
+      note.draw(x, y, width, color);
     }
   }
 
