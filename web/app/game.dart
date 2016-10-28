@@ -57,8 +57,7 @@ class Game {
 
   checkTaps(int col) {
     for (final note in notes) {
-      if (note.state == NoteState.active
-      && note.column == col) {
+      if (note.state == NoteState.active && note.column == col) {
         final judgement = TimingWindow.judge(songTime - note.time);
         if (judgement != Judgement.none) {
           note.state = NoteState.hit;
