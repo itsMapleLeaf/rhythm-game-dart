@@ -7,5 +7,5 @@ int intRange(int min, int max) =>
   random.nextInt(max) + min;
 
 /// Returns a double between min and max
-double doubleRange(double min, double max) =>
+double doubleRange(num min, num max) =>
   random.nextDouble() * (max - min) + min;
