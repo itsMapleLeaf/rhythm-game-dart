@@ -1,127 +1,13 @@
 import 'dart:html';
-import 'dart:math';
 
 import 'bg_animation.dart';
-import 'color.dart';
-import 'notefield.dart';
+import 'judgement.dart';
+import 'judgement_animation.dart';
 import 'note.dart';
-
-enum Judgement { absolute, perfect, great, miss, none }
-
-class TimingWindow {
-  static const absolute = 25 / 1000;
-  static const perfect = 80 / 1000;
-  static const great = 140 / 1000;
-
-  static Judgement judge(num timing) {
-    timing = timing.abs();
-    if (timing <= absolute) return Judgement.absolute;
-    if (timing <= perfect) return Judgement.perfect;
-    if (timing <= great) return Judgement.great;
-    return Judgement.none;
-  }
-}
-
-typedef num EasingFunction(num delta);
-
-class Tween {
-  static final EasingFunction linear = (num delta) => delta;
-  static final EasingFunction quadOut = (num delta) => pow(delta, 1/2);
-
-  final num start;
-  final num end;
-  final num duration;
-  final num delay;
-  EasingFunction easing;
-  num time = 0;
-
-  Tween(this.start, this.end, this.duration, [this.delay = 0, this.easing]) {
-    easing ??= quadOut;
-  }
-
-  setTime(num _time) {
-    time = _time;
-  }
-
-  update(num dt) {
-    setTime(time + dt);
-  }
-
-  reset() {
-    setTime(0);
-  }
-
-  num get value {
-    final delta = ((time - delay) / duration).clamp(0, 1);
-    return start + (end - start) * easing(delta);
-  }
-}
-
-class JudgementAnimation {
-  static final bounceNormal = new Tween(30, 0, 0.3);
-  static final bounceMiss = new Tween(0, 40, 1, 0, Tween.linear);
-
-  static final fadeNormal = new Tween(1, 0, 0.2, 1);
-  static final fadeMiss = new Tween(1, 0, 0.5, 0.5);
-
-  Tween bounce = bounceNormal;
-  Tween fade = fadeNormal;
-
-  Color color = White;
-  String text = '';
-
-  play(Judgement judgement) {
-    bounce.reset();
-    fade.reset();
-
-    switch (judgement) {
-      case Judgement.absolute:
-        text = 'ABSOLUTE';
-        color = Blue;
-        break;
-      case Judgement.perfect:
-        text = 'PERFECT';
-        color = Orange;
-        break;
-      case Judgement.great:
-        text = 'GREAT';
-        color = Green;
-        break;
-      case Judgement.miss:
-        text = 'BREAK';
-        color = Red;
-        break;
-      default:
-        text = '';
-    }
-
-    if (judgement == Judgement.miss) {
-      bounce = bounceMiss;
-      fade = fadeMiss;
-    } else {
-      bounce = bounceNormal;
-      fade = fadeNormal;
-    }
-  }
-
-  update(num dt) {
-    bounce.update(dt);
-    fade.update(dt);
-  }
-
-  draw(num x, num y) {
-    final CanvasElement canvas = querySelector('#game');
-
-    canvas.context2D
-      ..font = '64px Unica One'
-      ..textAlign = 'center'
-      ..fillStyle = color.opacity(fade.value)
-      ..fillText(text, x, y + bounce.value);
-  }
-}
+import 'notefield.dart';
 
 class Game {
-  static final List<KeyCode> keybinds = [
+  static final List<int> keybinds = [
     KeyCode.A,
     KeyCode.S,
     KeyCode.D,
@@ -153,6 +39,7 @@ class Game {
     songTime += dt;
     bg.update(dt);
     judgeanim.update(dt);
+    notefield.update(dt);
 
     for (final note in notes) {
       if (note.state == NoteState.active
@@ -164,6 +51,11 @@ class Game {
   }
 
   keydown(KeyboardEvent event) {
+    final index = keybinds.indexOf(event.keyCode);
+    if (index > -1) {
+      notefield.columns[index].pressed = true;
+    }
+
     for (final note in notes) {
       if (note.state == NoteState.active
       && event.keyCode == keybinds[note.column]) {
@@ -177,7 +69,12 @@ class Game {
     }
   }
 
-  keyup(KeyboardEvent event) {}
+  keyup(KeyboardEvent event) {
+    final index = keybinds.indexOf(event.keyCode);
+    if (index > -1) {
+      notefield.columns[index].pressed = false;
+    }
+  }
 
   draw() {
     final CanvasElement canvas = querySelector('#game');

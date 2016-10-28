@@ -28,6 +28,10 @@ class Notefield {
     }
   }
 
+  update(num dt) {
+    columns.forEach((col) => col.update(dt));
+  }
+
   drawBackground() {
     canvas.context2D
       ..fillStyle = backgroundColor

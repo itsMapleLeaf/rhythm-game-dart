@@ -16,13 +16,21 @@ class Color {
     return new Color(r, g, b, a * v);
   }
 
+  /// Darkens the color by a given amount
+  Color darken(num v) {
+    return multiply(1 - v);
+  }
+
   /// Converts the color to a string in rgb(...) format,
   /// or rgba(...) when alpha != 1
   String toString() {
+    final _r = (r * 255).round();
+    final _g = (g * 255).round();
+    final _b = (b * 255).round();
     if (a == 1) {
-      return 'rgb(${r * 255}, ${g * 255}, ${b * 255})';
+      return 'rgb($_r, $_g, $_b)';
     } else {
-      return 'rgba(${r * 255}, ${g * 255}, ${b * 255}, $a)';
+      return 'rgba($_r, $_g, $_b, $a)';
     }
   }
 }
