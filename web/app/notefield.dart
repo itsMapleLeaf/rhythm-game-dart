@@ -7,12 +7,13 @@ const num columnCount = 6;
 const num keyHeight = 100;
 const num leftOffset = 220;
 const num noteHeight = 24;
+const num noteSpacing = 200;
 const num receptorHeight = 24;
+
 final Color backgroundColor = Black.opacity(0.8);
 final Color borderColor = White.opacity(0.8);
 final List<Color> columnColors = [Yellow, White, Violet, White, Violet, White];
 final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
-final num noteSpacing = 200;
 final num totalWidth = columnWidths.reduce((a, b) => a + b);
 
 class Column {
