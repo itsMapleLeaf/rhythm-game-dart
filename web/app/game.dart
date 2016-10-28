@@ -109,14 +109,14 @@ class JudgementAnimation {
     fade.update(dt);
   }
 
-  draw() {
+  draw(num x, num y) {
     final CanvasElement canvas = querySelector('#game');
 
     canvas.context2D
       ..font = '64px Unica One'
       ..textAlign = 'center'
       ..fillStyle = color.opacity(fade.value)
-      ..fillText(text, 300, canvas.height / 2 + bounce.value);
+      ..fillText(text, x, y + bounce.value);
   }
 }
 
@@ -188,6 +188,8 @@ class Game {
 
     bg.draw();
     notefield.draw(notes, songTime);
-    judgeanim.draw();
+    judgeanim.draw(
+      Notefield.leftOffset + Notefield.totalWidth / 2,
+      canvas.height / 2 + 100);
   }
 }
