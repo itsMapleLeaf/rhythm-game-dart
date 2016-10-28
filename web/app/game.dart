@@ -105,7 +105,7 @@ class JudgementAnimation {
     final CanvasElement canvas = querySelector('#game');
 
     canvas.context2D
-      ..font = '64px Roboto'
+      ..font = '64px Unica One'
       ..textAlign = 'center'
       ..fillStyle = color
       ..fillText(text, 300, canvas.height / 2 + bounce.value);
