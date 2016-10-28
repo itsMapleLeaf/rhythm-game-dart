@@ -5,21 +5,32 @@ import 'notefield.dart';
 import 'note.dart';
 
 class Game {
+  static final List<KeyCode> keybinds = [
+    KeyCode.A,
+    KeyCode.S,
+    KeyCode.D,
+    KeyCode.K,
+    KeyCode.L,
+    KeyCode.SEMICOLON,
+  ];
+
   final List<Note> notes = [];
+
   num songTime = -3;
   BackgroundAnimation bg;
   Notefield notefield;
+
 
   Game() {
     bg = new BackgroundAnimation();
     notefield = new Notefield();
 
     notes.add(new Note(0 / 2, 0));
-    notes.add(new Note(1 / 2, 1));
-    notes.add(new Note(2 / 2, 2));
-    notes.add(new Note(3 / 2, 3));
-    notes.add(new Note(4 / 2, 4));
-    notes.add(new Note(5 / 2, 5));
+    notes.add(new Note(1 / 2, 0));
+    notes.add(new Note(2 / 2, 0));
+    notes.add(new Note(3 / 2, 0));
+    notes.add(new Note(4 / 2, 0));
+    notes.add(new Note(5 / 2, 0));
   }
 
   update(num dt) {
@@ -27,9 +38,18 @@ class Game {
     bg.update(dt);
   }
 
-  keyup(KeyboardEvent event) {}
+  keydown(KeyboardEvent event) {
+    for (final note in notes) {
+      if (note.state == NoteState.active
+      && event.keyCode == keybinds[note.column]
+      && (note.time - songTime).abs() < 0.1) {
+        note.state = NoteState.hit;
+        break;
+      }
+    }
+  }
 
-  keydown(KeyboardEvent event) {}
+  keyup(KeyboardEvent event) {}
 
   draw() {
     final CanvasElement canvas = querySelector('#game');
