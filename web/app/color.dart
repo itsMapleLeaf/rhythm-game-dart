@@ -18,7 +18,10 @@ class Color {
 
   /// Darkens the color by a given amount
   Color darken(num v) {
-    return multiply(1 - v);
+    final _r = r - r * v;
+    final _g = g - g * v;
+    final _b = b - b * v;
+    return new Color(_r, _g, _b, a);
   }
 
   /// Converts the color to a string in rgb(...) format,
