@@ -7,6 +7,8 @@ import 'note.dart';
 import 'notefield.dart';
 
 class Game {
+  static final CanvasElement canvas = querySelector('#game');
+
   static final Map<int, int> keybinds = {
     [KeyCode.A]: 0,
     [KeyCode.S]: 1,
@@ -78,8 +80,6 @@ class Game {
   }
 
   draw() {
-    final CanvasElement canvas = querySelector('#game');
-
     canvas.context2D
       ..fillStyle = 'white'
       ..fillRect(0, 0, canvas.width, canvas.height);

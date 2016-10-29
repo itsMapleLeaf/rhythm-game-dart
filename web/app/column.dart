@@ -7,6 +7,7 @@ import 'util.dart';
 class Column {
   static const keyHeight = 100;
   static const receptorHeight = 24;
+
   static final CanvasElement canvas = querySelector('#game');
 
   final Color color;

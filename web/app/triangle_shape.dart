@@ -4,6 +4,8 @@ import 'dart:math';
 import 'color.dart';
 
 class TriangleShape {
+  static final CanvasElement canvas = querySelector('#game');
+
   Point pos;
   final num size;
   final Color color;
@@ -13,7 +15,6 @@ class TriangleShape {
   }
 
   draw() {
-    final CanvasElement canvas = querySelector('#game');
     final ctx = canvas.context2D;
 
     ctx

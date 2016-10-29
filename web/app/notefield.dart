@@ -5,11 +5,12 @@ import 'column.dart';
 import 'note.dart';
 
 class Notefield {
+  static final CanvasElement canvas = querySelector('#game');
+
   static const columnCount = 6;
   static const leftOffset = 220;
   static const noteHeight = 24;
 
-  static final CanvasElement canvas = querySelector('#game');
   static final List<Color> columnColors = [Yellow, White, Violet, White, Violet, White];
   static final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
   static final backgroundColor = Black.opacity(0.8);

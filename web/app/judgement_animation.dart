@@ -5,6 +5,8 @@ import 'judgement.dart';
 import 'tween.dart';
 
 class JudgementAnimation {
+  static final CanvasElement canvas = querySelector('#game');
+
   static final bounceNormal = new Tween(30, 0, 0.3);
   static final bounceMiss = new Tween(0, 40, 1, 0, Tween.linear);
 
@@ -57,8 +59,6 @@ class JudgementAnimation {
   }
 
   draw(num x, num y) {
-    final CanvasElement canvas = querySelector('#game');
-
     canvas.context2D
       ..font = '64px Unica One'
       ..textAlign = 'center'
