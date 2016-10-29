@@ -7,14 +7,14 @@ import 'note.dart';
 import 'notefield.dart';
 
 class Game {
-  static final List<int> keybinds = [
-    KeyCode.A,
-    KeyCode.S,
-    KeyCode.D,
-    KeyCode.K,
-    KeyCode.L,
-    KeyCode.SEMICOLON,
-  ];
+  static final Map<int, int> keybinds = {
+    [KeyCode.A]: 0,
+    [KeyCode.S]: 1,
+    [KeyCode.D]: 2,
+    [KeyCode.K]: 3,
+    [KeyCode.L]: 4,
+    [KeyCode.SEMICOLON]: 5,
+  };
 
   final List<Note> notes = [];
   final judgeanim = new JudgementAnimation();
@@ -40,19 +40,18 @@ class Game {
     bg.update(dt);
     judgeanim.update(dt);
     notefield.update(dt);
-
     checkMisses();
   }
 
   keydown(KeyboardEvent event) {
-    final index = keybinds.indexOf(event.keyCode);
-    notefield.setColumnPressed(index, true);
-    checkTaps(index);
+    final col = keybinds[event.keyCode];
+    notefield.setColumnPressed(col, true);
+    checkTaps(col);
   }
 
   keyup(KeyboardEvent event) {
-    final index = keybinds.indexOf(event.keyCode);
-    notefield.setColumnPressed(index, false);
+    final col = keybinds[event.keyCode];
+    notefield.setColumnPressed(col, false);
   }
 
   checkTaps(int col) {
