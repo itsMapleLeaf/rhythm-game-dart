@@ -83,13 +83,8 @@ class Game {
     }
   }
 
-  bool isActive(Note note) {
-    return note.state == NoteState.active;
-  }
-
-  bool isMissed(Note note) {
-    return songTime > note.time + TimingWindow.great;
-  }
+  bool isActive(Note note) => note.state == NoteState.active;
+  bool isMissed(Note note) => songTime > note.time + TimingWindow.great;
 
   draw() {
     canvas.context2D
