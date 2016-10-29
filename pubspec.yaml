@@ -1,7 +1,7 @@
-name: 'rhythm_game_dart'
+name: rhythm_game_dart
 version: 0.0.1
-description: An absolute bare-bones web app.
-#author: just nobody <email@example.com>
+description: A rhythm game
+author: just nobody
 #homepage: https://www.example.com
 
 environment:
