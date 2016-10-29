@@ -7,16 +7,16 @@ import 'note.dart';
 import 'notefield.dart';
 
 class Game {
-  static final CanvasElement canvas = querySelector('#game');
+  static final List<int> keybinds = [
+    KeyCode.A,
+    KeyCode.S,
+    KeyCode.D,
+    KeyCode.K,
+    KeyCode.L,
+    KeyCode.SEMICOLON,
+  ];
 
-  static final Map<int, int> keybinds = {
-    [KeyCode.A]: 0,
-    [KeyCode.S]: 1,
-    [KeyCode.D]: 2,
-    [KeyCode.K]: 3,
-    [KeyCode.L]: 4,
-    [KeyCode.SEMICOLON]: 5,
-  };
+  static final CanvasElement canvas = querySelector('#game');
 
   final List<Note> notes = [];
   final judgeanim = new JudgementAnimation();
@@ -46,37 +46,49 @@ class Game {
   }
 
   keydown(KeyboardEvent event) {
-    final col = keybinds[event.keyCode];
-    notefield.setColumnPressed(col, true);
-    checkTaps(col);
+    final col = keybinds.indexOf(event.keyCode);
+    if (col > -1) {
+      notefield.setColumnPressed(col, true);
+      checkTaps(col);
+    }
   }
 
   keyup(KeyboardEvent event) {
-    final col = keybinds[event.keyCode];
-    notefield.setColumnPressed(col, false);
+    final col = keybinds.indexOf(event.keyCode);
+    if (col > -1) {
+      notefield.setColumnPressed(col, false);
+    }
   }
 
   checkTaps(int col) {
-    for (final note in notes) {
-      if (note.state == NoteState.active && note.column == col) {
-        final judgement = TimingWindow.judge(songTime - note.time);
-        if (judgement != Judgement.none) {
-          note.state = NoteState.hit;
-          judgeanim.play(judgement);
-          break;
-        }
+    final note =
+      notes.firstWhere((note) => isActive(note) && note.column == col);
+
+    if (note != null) {
+      final judgement = TimingWindow.judge(songTime - note.time);
+      if (judgement != Judgement.none) {
+        note.state = NoteState.hit;
+        judgeanim.play(judgement);
       }
     }
   }
 
   checkMisses() {
-    for (final note in notes) {
-      if (note.state == NoteState.active
-      && songTime > note.time + TimingWindow.great) {
-        note.state = NoteState.missed;
-        judgeanim.play(Judgement.miss);
-      }
+    final missed = notes
+      .where((note) => isActive(note) && isMissed(note))
+      ..forEach((note) => note.state = NoteState.missed);
+
+    if (missed.isNotEmpty) {
+      judgeanim.play(Judgement.miss);
     }
+  }
+
+  bool isActive(Note note) {
+    return note.state == NoteState.active;
+  }
+
+  bool isMissed(Note note) {
+    return songTime > note.time + TimingWindow.great;
   }
 
   draw() {
