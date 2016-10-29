@@ -13,35 +13,34 @@ class JudgementAnimation {
   static final fadeNormal = new Tween(1, 0, 0.2, 1);
   static final fadeMiss = new Tween(1, 0, 0.5, 0.5);
 
-  Tween bounce = bounceNormal;
-  Tween fade = fadeNormal;
+  static final textFromJudgement = {
+    Judgement.absolute: 'ABSOLUTE',
+    Judgement.perfect: 'PERFECT',
+    Judgement.great: 'GREAT',
+    Judgement.miss: 'BREAK',
+  };
+
+  static final colorFromJudgement = {
+    Judgement.absolute: Blue,
+    Judgement.perfect: Orange,
+    Judgement.great: Green,
+    Judgement.miss: Red,
+  };
 
   Color color = White;
   String text = '';
+  Tween bounce = bounceNormal;
+  Tween fade = fadeNormal;
 
   play(Judgement judgement) {
     bounce.reset();
     fade.reset();
 
-    switch (judgement) {
-      case Judgement.absolute:
-        text = 'ABSOLUTE';
-        color = Blue;
-        break;
-      case Judgement.perfect:
-        text = 'PERFECT';
-        color = Orange;
-        break;
-      case Judgement.great:
-        text = 'GREAT';
-        color = Green;
-        break;
-      case Judgement.miss:
-        text = 'BREAK';
-        color = Red;
-        break;
-      default:
-        text = '';
+    if (textFromJudgement[judgement] != null) {
+      text = textFromJudgement[judgement];
+    }
+    if (colorFromJudgement[judgement] != null) {
+      color = colorFromJudgement[judgement];
     }
 
     if (judgement == Judgement.miss) {
