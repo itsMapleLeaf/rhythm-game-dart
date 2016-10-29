@@ -15,7 +15,9 @@ class Clock {
 
   Clock(this.limit);
 
-  /// Update the clock's time. Returns the number of ticks performed.
+  /// Update the clock's time.
+  ///
+  /// Returns the number of ticks performed.
   /// Optionally, pass a function that's called once for every tick.
   int update(num dt, [onTick()]) {
     time += dt;
