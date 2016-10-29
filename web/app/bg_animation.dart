@@ -21,10 +21,10 @@ class BackgroundAnimation {
   ];
 
   addShape() {
-    final x = intRange(0, canvas.width);
+    final x = intBetween(0, canvas.width);
     final y = canvas.height + 100;
-    final size = doubleRange(3, 6);
-    final color = colors[intRange(0, colors.length)];
+    final size = doubleBetween(3, 6);
+    final color = colors[intBetween(0, colors.length)];
     shapes
       ..add(new TriangleShape(x, y, size, color))
       ..sort((a, b) => a.size - b.size);
