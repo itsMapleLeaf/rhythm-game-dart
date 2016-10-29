@@ -98,8 +98,6 @@ class Game {
 
     bg.draw();
     notefield.draw(notes, songTime);
-    judgeanim.draw(
-      Notefield.leftOffset + Notefield.totalWidth / 2,
-      canvas.height / 2 + 100);
+    judgeanim.draw(Notefield.center, canvas.height / 2 + 100);
   }
 }

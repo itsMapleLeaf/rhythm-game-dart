@@ -16,6 +16,7 @@ class Notefield {
   static final backgroundColor = Black.opacity(0.8);
   static final borderColor = White.opacity(0.8);
   static final totalWidth = columnWidths.reduce((a, b) => a + b);
+  static final center = leftOffset + totalWidth / 2;
 
   final List<Column> columns = [];
 
