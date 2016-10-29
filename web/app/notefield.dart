@@ -11,10 +11,18 @@ class Notefield {
   static const leftOffset = 220;
   static const noteHeight = 24;
 
-  static final List<Color> columnColors = [Yellow, White, Violet, White, Violet, White];
+  static final List<Color> columnColors = [
+    Color.yellow,
+    Color.white,
+    Color.violet,
+    Color.white,
+    Color.violet,
+    Color.white,
+  ];
+
   static final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
-  static final backgroundColor = Black.opacity(0.8);
-  static final borderColor = White.opacity(0.8);
+  static final backgroundColor = Color.black.withOpacity(0.8);
+  static final borderColor = Color.white.withOpacity(0.8);
   static final totalWidth = columnWidths.reduce((a, b) => a + b);
   static final center = leftOffset + totalWidth / 2;
 

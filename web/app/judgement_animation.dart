@@ -21,13 +21,13 @@ class JudgementAnimation {
   };
 
   static final colorFromJudgement = {
-    Judgement.absolute: Blue,
-    Judgement.perfect: Orange,
-    Judgement.great: Green,
-    Judgement.miss: Red,
+    Judgement.absolute: Color.blue,
+    Judgement.perfect: Color.orange,
+    Judgement.great: Color.green,
+    Judgement.miss: Color.red,
   };
 
-  Color color = White;
+  Color color = Color.white;
   String text = '';
   Tween bounce = bounceNormal;
   Tween fade = fadeNormal;
@@ -61,7 +61,7 @@ class JudgementAnimation {
     canvas.context2D
       ..font = '64px Unica One'
       ..textAlign = 'center'
-      ..fillStyle = color.opacity(fade.value)
+      ..fillStyle = color.withOpacity(fade.value)
       ..fillText(text, x, y + bounce.value);
   }
 }

@@ -12,15 +12,13 @@ class BackgroundAnimation {
   final Clock clock = new Clock(0.1);
 
   static final List<Color> colors = [
-    Red,
-    Orange,
-    Yellow,
-    Green,
-    Blue,
-    Violet,
+    Color.red,
+    Color.orange,
+    Color.yellow,
+    Color.green,
+    Color.blue,
+    Color.violet,
   ];
-
-  BackgroundAnimation();
 
   addShape() {
     final x = intRange(0, canvas.width);

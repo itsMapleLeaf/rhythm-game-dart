@@ -28,19 +28,19 @@ class Column {
 
   drawBacklight() {
     canvas.context2D
-      ..fillStyle = color.opacity(lerp(0.05, 0.12, brightness.value))
+      ..fillStyle = color.withOpacity(lerp(0.05, 0.12, brightness.value))
       ..fillRect(left, 0, width, canvas.height);
   }
 
   drawReceptor() {
     canvas.context2D
-      ..fillStyle = color.opacity(lerp(0.15, 0.3, brightness.value))
+      ..fillStyle = color.withOpacity(lerp(0.15, 0.3, brightness.value))
       ..fillRect(left, canvas.height - keyHeight, width, -receptorHeight);
   }
 
   drawKey() {
     canvas.context2D
-      ..fillStyle = color.darken(lerp(0.2, 0, brightness.value))
+      ..fillStyle = color.darkenedBy(lerp(0.2, 0, brightness.value))
       ..fillRect(left, canvas.height, width, -keyHeight);
   }
 }

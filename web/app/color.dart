@@ -4,20 +4,20 @@
 class Color {
   final num r, g, b, a;
 
-  const Color(this.r, this.g, this.b, [this.a = 1]);
+  Color(this.r, this.g, this.b, [this.a = 1]);
 
   /// Returns a new color with its RGB multiplied by a given value
-  Color multiply(num v) {
+  Color multipliedBy(num v) {
     return new Color(r * v, g * v, b * v, a);
   }
 
   /// Returns a new color with its alpha multiplied by a given value
-  Color opacity(num v) {
+  Color withOpacity(num v) {
     return new Color(r, g, b, a * v);
   }
 
   /// Darkens the color by a given amount
-  Color darken(num v) {
+  Color darkenedBy(num v) {
     final _r = r - r * v;
     final _g = g - g * v;
     final _b = b - b * v;
@@ -36,26 +36,27 @@ class Color {
       return 'rgba($_r, $_g, $_b, $a)';
     }
   }
+
+  /// Returns a color from RGB range 0-255 and alpha range 0-1
+  ///
+  /// Example: rgb(50, 50, 255, 0.5) -> a nice semi-transparent blue
+  Color.fromRGB(num r, num g, num b, [this.a = 1])
+    : this.r = r * 255,
+      this.g = g * 255,
+      this.b = b * 255;
+
+  static final Color white = new Color.fromRGB(255, 255, 255);
+  static final Color black = new Color.fromRGB(0, 0, 0);
+
+  // http://flatuicolors.com/
+  static final Color seaGreen = new Color.fromRGB(26, 188, 156);
+  static final Color green = new Color.fromRGB(46, 204, 113);
+  static final Color blue = new Color.fromRGB(52, 152, 219);
+  static final Color violet = new Color.fromRGB(155, 89, 182);
+  static final Color yellow = new Color.fromRGB(241, 196, 15);
+  static final Color orange = new Color.fromRGB(230, 126, 34);
+  static final Color red = new Color.fromRGB(231, 76, 60);
+  static final Color asphalt = new Color.fromRGB(52, 73, 94);
+  static final Color cloudy = new Color.fromRGB(236, 240, 241);
+  static final Color gray = new Color.fromRGB(149, 165, 166);
 }
-
-/// Returns a color from RGB range 0-255 and alpha range 0-1
-///
-/// Example: rgb(50, 50, 255, 0.5) -> a nice semi-transparent blue
-Color rgb(r, g, b, [a = 1]) {
-  return new Color(r / 255, g / 255, b / 255, a);
-}
-
-final Color White = rgb(255, 255, 255);
-final Color Black = rgb(0, 0, 0);
-
-// http://flatuicolors.com/
-final Color SeaGreen = rgb(26, 188, 156);
-final Color Green = rgb(46, 204, 113);
-final Color Blue = rgb(52, 152, 219);
-final Color Violet = rgb(155, 89, 182);
-final Color Yellow = rgb(241, 196, 15);
-final Color Orange = rgb(230, 126, 34);
-final Color Red = rgb(231, 76, 60);
-final Color Asphalt = rgb(52, 73, 94);
-final Color Cloudy = rgb(236, 240, 241);
-final Color Gray = rgb(149, 165, 166);
