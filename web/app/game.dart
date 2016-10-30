@@ -1,6 +1,7 @@
 import 'dart:html';
 
 import 'bg_animation.dart';
+import 'combo_animation.dart';
 import 'judgement.dart';
 import 'judgement_animation.dart';
 import 'note.dart';
@@ -20,6 +21,7 @@ class Game {
 
   final List<Note> notes = [];
   final judgeanim = new JudgementAnimation();
+  final comboanim = new ComboAnimation();
 
   num songTime = -3;
   BackgroundAnimation bg;
@@ -40,8 +42,9 @@ class Game {
   update(num dt) {
     songTime += dt;
     bg.update(dt);
-    judgeanim.update(dt);
     notefield.update(dt);
+    judgeanim.update(dt);
+    comboanim.update(dt);
     checkMisses();
   }
 
@@ -68,18 +71,21 @@ class Game {
       final judgement = TimingWindow.judge(songTime - note.time);
       if (judgement != Judgement.none) {
         note.state = NoteState.hit;
+        comboanim.combo += 1;
         judgeanim.play(judgement);
+        comboanim.play();
       }
     }
   }
 
   checkMisses() {
     final missed = notes
-      .where((note) => isActive(note) && isMissed(note))
-      ..forEach((note) => note.state = NoteState.missed);
+      .where((note) => isActive(note) && isMissed(note));
 
     if (missed.isNotEmpty) {
+      missed.forEach((note) => note.state = NoteState.missed);
       judgeanim.play(Judgement.miss);
+      comboanim.combo = 0;
     }
   }
 
@@ -94,5 +100,6 @@ class Game {
     bg.draw();
     notefield.draw(notes, songTime);
     judgeanim.draw(Notefield.center, canvas.height / 2 + 100);
+    comboanim.draw(Notefield.center, canvas.height / 2 - 120);
   }
 }
