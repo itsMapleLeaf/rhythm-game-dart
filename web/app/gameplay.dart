@@ -3,8 +3,8 @@ import 'dart:html';
 import 'bg_animation.dart';
 import 'combo_animation.dart';
 import 'game_state.dart';
-import 'judgement.dart';
 import 'judgement_animation.dart';
+import 'judgement.dart';
 import 'note.dart';
 import 'notefield.dart';
 
