@@ -7,49 +7,47 @@ import 'tween.dart';
 class JudgementAnimation {
   static final CanvasElement canvas = querySelector('#game');
 
-  static final Tween bounceNormal = new Tween(30, 0, 0.3);
-  static final Tween bounceMiss = new Tween(0, 40, 1, 0, Tween.linear);
+  static Tween bounceNormal() => new Tween(30, 0, 0.3);
+  static Tween bounceMiss() => new Tween(0, 40, 1, 0, Tween.linear);
 
-  static final Tween fadeNormal = new Tween(1, 0, 0.2, 1);
-  static final Tween fadeMiss = new Tween(1, 0, 0.5, 0.5);
+  static Tween fadeNormal() => new Tween(1, 0, 0.2, 1);
+  static Tween fadeMiss() => new Tween(1, 0, 0.5, 0.5);
 
-  static final Map<Judgement, String> textFromJudgement = {
-    Judgement.absolute: 'ABSOLUTE',
-    Judgement.perfect: 'PERFECT',
-    Judgement.great: 'GREAT',
-    Judgement.miss: 'BREAK',
-  };
+  Judgement judgement;
+  Tween bounce;
+  Tween fade;
+  num time = 0;
 
-  static final Map<Judgement, Color> colorFromJudgement = {
-    Judgement.absolute: Color.blue,
-    Judgement.perfect: Color.orange,
-    Judgement.great: Color.green,
-    Judgement.miss: Color.red,
-  };
+  String get text {
+    switch (judgement) {
+      case Judgement.absolute: return 'ABSOLUTE';
+      case Judgement.perfect: return 'PERFECT';
+      case Judgement.great: return 'GREAT';
+      case Judgement.miss: return 'BREAK';
+      default: return '';
+    }
+  }
 
-  Color color = Color.white;
-  String text = '';
-  Tween bounce = bounceNormal;
-  Tween fade = fadeNormal;
+  Color get color {
+    switch (judgement) {
+      case Judgement.absolute: return Color.blue;
+      case Judgement.perfect: return Color.orange;
+      case Judgement.great: return Color.green;
+      case Judgement.miss: return Color.red;
+      default: return Color.white;
+    }
+  }
 
   play(Judgement judgement) {
+    if (judgement == Judgement.miss) {
+      bounce = bounceMiss();
+      fade = fadeMiss();
+    } else {
+      bounce = bounceNormal();
+      fade = fadeNormal();
+    }
     bounce.reset();
     fade.reset();
-
-    if (textFromJudgement[judgement] != null) {
-      text = textFromJudgement[judgement];
-    }
-    if (colorFromJudgement[judgement] != null) {
-      color = colorFromJudgement[judgement];
-    }
-
-    if (judgement == Judgement.miss) {
-      bounce = bounceMiss;
-      fade = fadeMiss;
-    } else {
-      bounce = bounceNormal;
-      fade = fadeNormal;
-    }
   }
 
   update(num dt) {
