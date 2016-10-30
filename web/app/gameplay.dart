@@ -66,10 +66,10 @@ class Gameplay implements GameState {
   }
 
   checkTaps(int col) {
-    final note = notes
-      .firstWhere((note) => note.column == col && isActive(note));
+    try {
+      final note = notes
+        .firstWhere((note) => note.column == col && isActive(note));
 
-    if (note != null) {
       final judgement = TimingWindow.judge(songTime - note.time);
       if (judgement != Judgement.none) {
         note.state = NoteState.hit;
@@ -77,7 +77,7 @@ class Gameplay implements GameState {
         judgeanim.play(judgement);
         comboanim.play();
       }
-    }
+    } catch (e) {}
   }
 
   checkMisses() {
