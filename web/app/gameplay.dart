@@ -65,8 +65,10 @@ class Gameplay implements GameState {
   }
 
   checkTaps(int col) {
-    final note =
-      notes.firstWhere((note) => isActive(note) && note.column == col);
+    final note = notes
+      .where(isActive)
+      .where((note) => note.column == col)
+      .first;
 
     if (note != null) {
       final judgement = TimingWindow.judge(songTime - note.time);
@@ -80,9 +82,7 @@ class Gameplay implements GameState {
   }
 
   checkMisses() {
-    final missed = notes
-      .where((note) => isActive(note) && isMissed(note));
-
+    final missed = notes.where(isActive).where(isMissed);
     if (missed.isNotEmpty) {
       missed.forEach((note) => note.state = NoteState.missed);
       judgeanim.play(Judgement.miss);
