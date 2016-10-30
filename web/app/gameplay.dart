@@ -40,13 +40,14 @@ class Gameplay implements GameState {
     notes.add(new Note(5 / 2, 5));
   }
 
-  update(num dt) {
+  GameState update(num dt) {
     songTime += dt;
     bg.update(dt);
     notefield.update(dt);
     judgeanim.update(dt);
     comboanim.update(dt);
     checkMisses();
+    return this;
   }
 
   keydown(KeyboardEvent event) {

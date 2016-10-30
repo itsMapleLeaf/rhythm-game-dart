@@ -1,8 +1,8 @@
 import 'dart:html' show KeyboardEvent;
 
 abstract class GameState {
-  update(num dt);
-  keydown(KeyboardEvent event);
-  keyup(KeyboardEvent event);
-  draw();
+  GameState update(num dt);
+  void keydown(KeyboardEvent event);
+  void keyup(KeyboardEvent event);
+  void draw();
 }

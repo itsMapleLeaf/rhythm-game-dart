@@ -11,7 +11,11 @@ class Game {
   }
 
   update(num dt) {
-    state.update(dt);
+    state = state.update(dt);
+  }
+
+  draw() {
+    state.draw();
   }
 
   keydown(KeyboardEvent event) {
@@ -20,9 +24,5 @@ class Game {
 
   keyup(KeyboardEvent event) {
     state.keyup(event);
-  }
-
-  draw() {
-    state.draw();
   }
 }
