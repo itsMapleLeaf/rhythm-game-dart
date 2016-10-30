@@ -7,20 +7,20 @@ import 'tween.dart';
 class JudgementAnimation {
   static final CanvasElement canvas = querySelector('#game');
 
-  static final bounceNormal = new Tween(30, 0, 0.3);
-  static final bounceMiss = new Tween(0, 40, 1, 0, Tween.linear);
+  static final Tween bounceNormal = new Tween(30, 0, 0.3);
+  static final Tween bounceMiss = new Tween(0, 40, 1, 0, Tween.linear);
 
-  static final fadeNormal = new Tween(1, 0, 0.2, 1);
-  static final fadeMiss = new Tween(1, 0, 0.5, 0.5);
+  static final Tween fadeNormal = new Tween(1, 0, 0.2, 1);
+  static final Tween fadeMiss = new Tween(1, 0, 0.5, 0.5);
 
-  static final textFromJudgement = {
+  static final Map<Judgement, String> textFromJudgement = {
     Judgement.absolute: 'ABSOLUTE',
     Judgement.perfect: 'PERFECT',
     Judgement.great: 'GREAT',
     Judgement.miss: 'BREAK',
   };
 
-  static final colorFromJudgement = {
+  static final Map<Judgement, Color> colorFromJudgement = {
     Judgement.absolute: Color.blue,
     Judgement.perfect: Color.orange,
     Judgement.great: Color.green,

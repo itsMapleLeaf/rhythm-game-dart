@@ -7,11 +7,11 @@ enum NoteState { active, holding, hit, missed }
 
 class Note {
   static final CanvasElement canvas = querySelector('#game');
-  static const noteSpacing = 200;
-  static const noteHeight = 24;
+  static const int noteSpacing = 200;
+  static const int noteHeight = 24;
 
   final num time;
-  final num column;
+  final int column;
   NoteState state = NoteState.active;
 
   Note(this.time, this.column);

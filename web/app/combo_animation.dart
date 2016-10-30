@@ -5,7 +5,7 @@ import 'tween.dart';
 class ComboAnimation {
   static final CanvasElement canvas = querySelector('#game');
 
-  final bounce = new Tween(0.7, 1, 0.2);
+  final Tween bounce = new Tween(0.7, 1, 0.2);
   int combo = 0;
 
   play() {

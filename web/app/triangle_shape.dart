@@ -6,9 +6,9 @@ import 'color.dart';
 class TriangleShape {
   static final CanvasElement canvas = querySelector('#game');
 
+  num size;
+  Color color;
   Point pos;
-  final num size;
-  final Color color;
 
   TriangleShape(x, y, this.size, this.color) {
     pos = new Point(x, y);

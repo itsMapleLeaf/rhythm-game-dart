@@ -7,9 +7,9 @@ import 'note.dart';
 class Notefield {
   static final CanvasElement canvas = querySelector('#game');
 
-  static const columnCount = 6;
-  static const leftOffset = 220;
-  static const noteHeight = 24;
+  static const int columnCount = 6;
+  static const int leftOffset = 220;
+  static const int noteHeight = 24;
 
   static final List<Color> columnColors = [
     Color.yellow,
@@ -21,10 +21,10 @@ class Notefield {
   ];
 
   static final List<num> columnWidths = [50, 48, 46, 48, 46, 48];
-  static final backgroundColor = Color.black.withOpacity(0.8);
-  static final borderColor = Color.white.withOpacity(0.8);
-  static final totalWidth = columnWidths.reduce((a, b) => a + b);
-  static final center = leftOffset + totalWidth / 2;
+  static final Color backgroundColor = Color.black.withOpacity(0.8);
+  static final Color borderColor = Color.white.withOpacity(0.8);
+  static final num totalWidth = columnWidths.reduce((a, b) => a + b);
+  static final num center = leftOffset + totalWidth / 2;
 
   final List<Column> columns = [];
 

@@ -5,15 +5,15 @@ import 'tween.dart';
 import 'util.dart';
 
 class Column {
-  static const keyHeight = 100;
-  static const receptorHeight = 24;
+  static const int keyHeight = 100;
+  static const int receptorHeight = 24;
 
   static final CanvasElement canvas = querySelector('#game');
 
   final Color color;
   final num left;
   final num width;
-  final brightness = new Tween(1, 0, 0.2);
+  final Tween brightness = new Tween(1, 0, 0.2);
   bool pressed = false;
 
   Column(this.left, this.width, this.color);

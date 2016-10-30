@@ -21,8 +21,8 @@ class Gameplay implements GameState {
   static final CanvasElement canvas = querySelector('#game');
 
   final List<Note> notes = [];
-  final judgeanim = new JudgementAnimation();
-  final comboanim = new ComboAnimation();
+  final JudgementAnimation judgeanim = new JudgementAnimation();
+  final ComboAnimation comboanim = new ComboAnimation();
 
   num songTime = -3;
   BackgroundAnimation bg;
