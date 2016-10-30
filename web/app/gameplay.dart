@@ -67,9 +67,7 @@ class Gameplay implements GameState {
 
   checkTaps(int col) {
     final note = notes
-      .where(isActive)
-      .where((note) => note.column == col)
-      .first;
+      .firstWhere((note) => note.column == col && isActive(note));
 
     if (note != null) {
       final judgement = TimingWindow.judge(songTime - note.time);
