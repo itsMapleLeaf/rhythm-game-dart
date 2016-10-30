@@ -2,12 +2,13 @@ import 'dart:html';
 
 import 'bg_animation.dart';
 import 'combo_animation.dart';
+import 'game_state.dart';
 import 'judgement.dart';
 import 'judgement_animation.dart';
 import 'note.dart';
 import 'notefield.dart';
 
-class Gameplay {
+class Gameplay implements GameState {
   static final List<int> keybinds = [
     KeyCode.A,
     KeyCode.S,

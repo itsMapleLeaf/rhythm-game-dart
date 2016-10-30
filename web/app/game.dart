@@ -1,23 +1,28 @@
 import 'dart:html';
 
 import 'gameplay.dart';
+import 'game_state.dart';
 
 class Game {
-  final gameplay = new Gameplay();
+  GameState state;
+
+  Game() {
+    state = new Gameplay();
+  }
 
   update(num dt) {
-    gameplay.update(dt);
+    state.update(dt);
   }
 
   keydown(KeyboardEvent event) {
-    gameplay.keydown(event);
+    state.keydown(event);
   }
 
   keyup(KeyboardEvent event) {
-    gameplay.keyup(event);
+    state.keyup(event);
   }
 
   draw() {
-    gameplay.draw();
+    state.draw();
   }
 }
