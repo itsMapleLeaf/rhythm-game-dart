@@ -41,9 +41,9 @@ class Color {
   ///
   /// Example: rgb(50, 50, 255, 0.5) -> a nice semi-transparent blue
   Color.fromRGB(num r, num g, num b, [this.a = 1])
-    : this.r = r * 255,
-      this.g = g * 255,
-      this.b = b * 255;
+    : this.r = r / 255,
+      this.g = g / 255,
+      this.b = b / 255;
 
   static final Color white = new Color.fromRGB(255, 255, 255);
   static final Color black = new Color.fromRGB(0, 0, 0);
