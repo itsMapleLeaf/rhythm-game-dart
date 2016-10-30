@@ -1,105 +1,23 @@
 import 'dart:html';
 
-import 'bg_animation.dart';
-import 'combo_animation.dart';
-import 'judgement.dart';
-import 'judgement_animation.dart';
-import 'note.dart';
-import 'notefield.dart';
+import 'gameplay.dart';
 
 class Game {
-  static final List<int> keybinds = [
-    KeyCode.A,
-    KeyCode.S,
-    KeyCode.D,
-    KeyCode.K,
-    KeyCode.L,
-    KeyCode.SEMICOLON,
-  ];
-
-  static final CanvasElement canvas = querySelector('#game');
-
-  final List<Note> notes = [];
-  final judgeanim = new JudgementAnimation();
-  final comboanim = new ComboAnimation();
-
-  num songTime = -3;
-  BackgroundAnimation bg;
-  Notefield notefield;
-
-  Game() {
-    bg = new BackgroundAnimation();
-    notefield = new Notefield();
-
-    notes.add(new Note(0 / 2, 0));
-    notes.add(new Note(1 / 2, 1));
-    notes.add(new Note(2 / 2, 2));
-    notes.add(new Note(3 / 2, 3));
-    notes.add(new Note(4 / 2, 4));
-    notes.add(new Note(5 / 2, 5));
-  }
+  final gameplay = new Gameplay();
 
   update(num dt) {
-    songTime += dt;
-    bg.update(dt);
-    notefield.update(dt);
-    judgeanim.update(dt);
-    comboanim.update(dt);
-    checkMisses();
+    gameplay.update(dt);
   }
 
   keydown(KeyboardEvent event) {
-    final col = keybinds.indexOf(event.keyCode);
-    if (col > -1) {
-      notefield.setColumnPressed(col, true);
-      checkTaps(col);
-    }
+    gameplay.keydown(event);
   }
 
   keyup(KeyboardEvent event) {
-    final col = keybinds.indexOf(event.keyCode);
-    if (col > -1) {
-      notefield.setColumnPressed(col, false);
-    }
+    gameplay.keyup(event);
   }
-
-  checkTaps(int col) {
-    final note =
-      notes.firstWhere((note) => isActive(note) && note.column == col);
-
-    if (note != null) {
-      final judgement = TimingWindow.judge(songTime - note.time);
-      if (judgement != Judgement.none) {
-        note.state = NoteState.hit;
-        comboanim.combo += 1;
-        judgeanim.play(judgement);
-        comboanim.play();
-      }
-    }
-  }
-
-  checkMisses() {
-    final missed = notes
-      .where((note) => isActive(note) && isMissed(note));
-
-    if (missed.isNotEmpty) {
-      missed.forEach((note) => note.state = NoteState.missed);
-      judgeanim.play(Judgement.miss);
-      comboanim.combo = 0;
-    }
-  }
-
-  bool isActive(Note note) => note.state == NoteState.active;
-  bool isMissed(Note note) => songTime > note.time + TimingWindow.great;
 
   draw() {
-    canvas.context2D
-      ..fillStyle = 'white'
-      ..fillRect(0, 0, canvas.width, canvas.height);
-
-    bg.draw();
-    notefield.draw(notes, songTime);
-    judgeanim.draw(Notefield.center, canvas.height / 2 + 100);
-    comboanim.draw(Notefield.center, canvas.height / 2 - 120);
+    gameplay.draw();
   }
 }
