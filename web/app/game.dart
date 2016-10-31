@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:html' show KeyboardEvent;
 
 import 'gameplay.dart';
 import 'game_state.dart';
