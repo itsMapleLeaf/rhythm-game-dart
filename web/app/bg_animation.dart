@@ -3,11 +3,11 @@ import 'dart:html';
 import 'clock.dart';
 import 'color.dart';
 import 'random.dart';
-import 'triangle_shape.dart';
+import 'graphics.dart';
 
 class BackgroundAnimation {
   static final CanvasElement canvas = querySelector('#game');
-  final List<TriangleShape> shapes = [];
+  final List<Polygon> shapes = [];
   final Clock clock = new Clock(0.1);
 
   static final List<Color> colors = [
@@ -25,7 +25,7 @@ class BackgroundAnimation {
     final size = doubleBetween(3, 6) * 20;
     final color = colors[intBetween(0, colors.length)];
     shapes
-      ..add(new TriangleShape(x, y, size, color))
+      ..add(new Polygon(x, y, size, color, 3))
       ..sort((a, b) => a.size - b.size);
   }
 
