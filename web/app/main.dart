@@ -2,18 +2,19 @@ import 'dart:html';
 
 import 'game.dart';
 
-main() async {
+main() {
   final game = new Game();
+  num time = 0;
 
-  window.onKeyDown.forEach(game.keydown);
-  window.onKeyUp.forEach(game.keyup);
-
-  num time = await window.animationFrame;
-  while (true) {
-    final now = await window.animationFrame;
+  frame(final num now) {
     final elapsed = now - time;
     time = now;
     game.update(elapsed / 1000);
     game.draw();
+    window.requestAnimationFrame(frame);
   }
+
+  window.requestAnimationFrame(frame);
+  window.onKeyDown.forEach(game.keydown);
+  window.onKeyUp.forEach(game.keyup);
 }
