@@ -6,13 +6,10 @@ import 'color.dart';
 class TriangleShape {
   static final CanvasElement canvas = querySelector('#game');
 
-  num size;
+  num x, y, size;
   Color color;
-  Point pos;
 
-  TriangleShape(x, y, this.size, this.color) {
-    pos = new Point(x, y);
-  }
+  TriangleShape(this.x, this.y, this.size, this.color);
 
   draw() {
     final ctx = canvas.context2D;
@@ -23,9 +20,9 @@ class TriangleShape {
 
     for (num i = 0; i < 3; i++) {
       final angle = i / 3 * PI * 2;
-      final x = -sin(angle) * size * 20;
-      final y = -cos(angle) * size * 20;
-      ctx.lineTo(pos.x + x, pos.y + y);
+      final ox = -sin(angle) * size * 20;
+      final oy = -cos(angle) * size * 20;
+      ctx.lineTo(x + ox, y + oy);
     }
 
     ctx.fill();
