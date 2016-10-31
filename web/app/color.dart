@@ -18,22 +18,33 @@ class Color {
 
   /// Darkens the color by a given amount
   Color darkenedBy(num v) {
-    final _r = r - r * v;
-    final _g = g - g * v;
-    final _b = b - b * v;
-    return new Color(_r, _g, _b, a);
+    return new Color(
+      r - r * v,
+      g - g * v,
+      b - b * v,
+      a,
+    );
+  }
+
+  Color lightenedBy(num v) {
+    return new Color(
+      r + (1 - r) * v,
+      g + (1 - g) * v,
+      b + (1 - b) * v,
+      a,
+    );
   }
 
   /// Converts the color to a string in rgb(...) format,
   /// or rgba(...) when alpha != 1
   String toString() {
-    final _r = (r * 255).round();
-    final _g = (g * 255).round();
-    final _b = (b * 255).round();
+    final r = (this.r * 255).round();
+    final g = (this.g * 255).round();
+    final b = (this.b * 255).round();
     if (a == 1) {
-      return 'rgb($_r, $_g, $_b)';
+      return 'rgb($r, $g, $b)';
     } else {
-      return 'rgba($_r, $_g, $_b, $a)';
+      return 'rgba($r, $g, $b, $a)';
     }
   }
 
@@ -41,9 +52,9 @@ class Color {
   ///
   /// Example: rgb(50, 50, 255, 0.5) -> a nice semi-transparent blue
   Color.fromRGB(num r, num g, num b, [this.a = 1])
-    : this.r = r / 255,
-      this.g = g / 255,
-      this.b = b / 255;
+    : r = r / 255,
+      g = g / 255,
+      b = b / 255;
 
   static final Color white = new Color.fromRGB(255, 255, 255);
   static final Color black = new Color.fromRGB(0, 0, 0);

@@ -20,8 +20,8 @@ class TriangleShape {
 
     for (num i = 0; i < 3; i++) {
       final angle = i / 3 * PI * 2;
-      final ox = -sin(angle) * size * 20;
-      final oy = -cos(angle) * size * 20;
+      final ox = -sin(angle) * size;
+      final oy = -cos(angle) * size;
       ctx.lineTo(x + ox, y + oy);
     }
 

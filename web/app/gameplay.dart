@@ -25,11 +25,9 @@ class Gameplay implements GameState {
   final ComboAnimation comboanim = new ComboAnimation();
 
   num songTime = -3;
-  BackgroundAnimation bg;
   Notefield notefield;
 
   Gameplay() {
-    bg = new BackgroundAnimation();
     notefield = new Notefield();
 
     notes.add(new Note(0 / 2, 0));
@@ -42,7 +40,6 @@ class Gameplay implements GameState {
 
   GameState update(num dt) {
     songTime += dt;
-    bg.update(dt);
     notefield.update(dt);
     judgeanim.update(dt);
     comboanim.update(dt);
@@ -93,11 +90,6 @@ class Gameplay implements GameState {
   bool isMissed(Note note) => songTime > note.time + TimingWindow.great;
 
   draw() {
-    canvas.context2D
-      ..fillStyle = 'white'
-      ..fillRect(0, 0, canvas.width, canvas.height);
-
-    bg.draw();
     notefield.draw(notes, songTime);
     judgeanim.draw(Notefield.center, canvas.height / 2 + 100);
     comboanim.draw(Notefield.center, canvas.height / 2 - 120);

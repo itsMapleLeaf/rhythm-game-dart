@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:math';
 
 import 'clock.dart';
 import 'color.dart';
@@ -23,7 +22,7 @@ class BackgroundAnimation {
   addShape() {
     final x = intBetween(0, canvas.width);
     final y = canvas.height + 100;
-    final size = doubleBetween(3, 6);
+    final size = doubleBetween(3, 6) * 20;
     final color = colors[intBetween(0, colors.length)];
     shapes
       ..add(new TriangleShape(x, y, size, color))
@@ -36,9 +35,9 @@ class BackgroundAnimation {
 
     clock.update(dt, addShape);
     for (final shape in shapes) {
-      shape.pos -= new Point(0, 30 * shape.size * dt);
+      shape.y -= shape.size * dt;
     }
-    shapes.retainWhere((shape) => shape.pos.y > -100);
+    shapes.retainWhere((shape) => shape.y > -100);
   }
 
   draw() {
