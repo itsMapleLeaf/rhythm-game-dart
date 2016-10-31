@@ -15,6 +15,6 @@ main() {
   }
 
   window.requestAnimationFrame(frame);
-  window.onKeyDown.forEach(game.keydown);
-  window.onKeyUp.forEach(game.keyup);
+  window.onKeyDown.listen(game.keydown);
+  window.onKeyUp.listen(game.keyup);
 }
