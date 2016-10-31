@@ -7,11 +7,11 @@ import 'tween.dart';
 class JudgementAnimation {
   static final CanvasElement canvas = querySelector('#game');
 
-  static Tween bounceNormal() => new Tween(30, 0, 0.3);
-  static Tween bounceMiss() => new Tween(0, 40, 1, 0, Tween.linear);
+  static Tween get bounceNormal => new Tween(30, 0, 0.3);
+  static Tween get bounceMiss => new Tween(0, 40, 1, 0, Tween.linear);
 
-  static Tween fadeNormal() => new Tween(1, 0, 0.2, 1);
-  static Tween fadeMiss() => new Tween(1, 0, 0.5, 0.5);
+  static Tween get fadeNormal => new Tween(1, 0, 0.2, 1);
+  static Tween get fadeMiss => new Tween(1, 0, 0.5, 0.5);
 
   Judgement judgement;
   Tween bounce;
@@ -40,11 +40,11 @@ class JudgementAnimation {
 
   play(Judgement judgement) {
     if (judgement == Judgement.miss) {
-      bounce = bounceMiss();
-      fade = fadeMiss();
+      bounce = bounceMiss;
+      fade = fadeMiss;
     } else {
-      bounce = bounceNormal();
-      fade = fadeNormal();
+      bounce = bounceNormal;
+      fade = fadeNormal;
     }
     bounce.reset();
     fade.reset();
