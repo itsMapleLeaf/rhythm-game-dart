@@ -11,7 +11,7 @@ abstract class Drawable {
 
 /// An equilateral polygon
 class Polygon implements Drawable {
-  static CanvasElement canvas = querySelector('#game');
+  static final CanvasElement canvas = querySelector('#game');
 
   num x, y, size;
   Color color;
@@ -24,6 +24,7 @@ class Polygon implements Drawable {
     final ctx = canvas.context2D;
 
     ctx
+      ..save()
       ..fillStyle = color
       ..translate(x, y)
       ..rotate(rotation)
@@ -37,13 +38,16 @@ class Polygon implements Drawable {
       ctx.lineTo(x, y);
     }
 
-    ctx.fill();
+    ctx
+      ..fill()
+      ..restore()
+      ;
   }
 }
 
 /// A rectangle
 class Rectangle implements Drawable {
-  static CanvasElement canvas = querySelector('#game');
+  static final CanvasElement canvas = querySelector('#game');
 
   num x, y, width, height;
   Color color;
