@@ -1,20 +1,33 @@
-import 'dart:html';
+import 'dart:html' hide Rectangle;
 
 import 'bg_animation.dart';
 import 'color.dart';
 // import 'gameplay.dart';
 import 'game_state.dart';
+import 'graphics.dart';
 import 'song_select.dart';
 
 class Game {
-  final CanvasElement canvas = querySelector('#game');
+  static final CanvasElement canvas = querySelector('#game');
 
   GameState state;
-  BackgroundAnimation bg;
+  BackgroundAnimation bganim;
+
+  Rectangle background = new Rectangle(0, 0, canvas.width, canvas.height,
+    Color.white);
+
+  Rectangle shade = new Rectangle(0, 0, canvas.width, canvas.height,
+    Color.white.withOpacity(0.4));
+
+  List<Drawable> drawables = [];
 
   Game() {
     state = new SongSelect();
-    bg = new BackgroundAnimation();
+    bganim = new BackgroundAnimation();
+
+    drawables.add(background);
+    drawables.add(bganim as Drawable);
+    drawables.add(shade);
   }
 
   update(num dt) {
@@ -22,27 +35,14 @@ class Game {
     if (newState != null) {
       state = newState;
     }
-
-    bg.update(dt);
+    bganim.update(dt);
   }
 
   draw() {
-    clear();
-    bg.draw();
-    drawWhiteShade();
+    for (final d in drawables) {
+      d.draw();
+    }
     state.draw();
-  }
-
-  clear() {
-    canvas.context2D
-      ..fillStyle = Color.white
-      ..fillRect(0, 0, canvas.width, canvas.height);
-  }
-
-  drawWhiteShade() {
-    canvas.context2D
-      ..fillStyle = Color.white.withOpacity(0.4)
-      ..fillRect(0, 0, canvas.width, canvas.height);
   }
 
   keydown(KeyboardEvent event) => state.keydown(event);
