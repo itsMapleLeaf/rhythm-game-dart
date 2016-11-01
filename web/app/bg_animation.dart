@@ -2,8 +2,8 @@ import 'dart:html';
 
 import 'clock.dart';
 import 'color.dart';
-import 'random.dart';
 import 'graphics.dart';
+import 'util.dart';
 
 class BackgroundAnimation {
   static final CanvasElement canvas = querySelector('#game');
@@ -20,10 +20,10 @@ class BackgroundAnimation {
   ];
 
   addShape() {
-    final x = intBetween(0, canvas.width);
+    final x = random(0, canvas.width);
     final y = canvas.height + 100;
-    final size = doubleBetween(3, 6) * 20;
-    final color = colors[intBetween(0, colors.length)];
+    final size = random(60, 120);
+    final color = colors[random(0, colors.length).floor()];
     shapes
       ..add(new Polygon(x, y, size, color, 3))
       ..sort((a, b) => a.size - b.size);
