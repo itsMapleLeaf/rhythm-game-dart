@@ -39,9 +39,7 @@ class Game {
   }
 
   draw() {
-    for (final d in drawables) {
-      d.draw();
-    }
+    for (final d in drawables) d.draw();
     state.draw();
   }
 
