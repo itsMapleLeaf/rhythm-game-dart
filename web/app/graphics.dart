@@ -57,3 +57,27 @@ class Rectangle implements Drawable {
       ;
   }
 }
+
+/// Drawable container
+class Stage implements Drawable {
+  num x = 0;
+  num y = 0;
+  Color color = Color.white;
+  List<Drawable> children;
+
+  Stage(this.children);
+
+  add(Drawable child) {
+    children.add(child);
+  }
+
+  remove(Drawable child) {
+    children.remove(child);
+  }
+
+  draw() {
+    for (final child in children) {
+      child.draw();
+    }
+  }
+}

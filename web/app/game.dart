@@ -13,21 +13,16 @@ class Game {
   GameState state;
   BackgroundAnimation bganim;
 
-  Rectangle background = new Rectangle(0, 0, canvas.width, canvas.height,
-    Color.white);
-
-  Rectangle shade = new Rectangle(0, 0, canvas.width, canvas.height,
-    Color.white.withOpacity(0.4));
-
-  List<Drawable> drawables = [];
+  Stage get stage => new Stage([
+    new Rectangle(0, 0, canvas.width, canvas.height, Color.white),
+    bganim,
+    new Rectangle(0, 0, canvas.width, canvas.height, Color.white.withOpacity(0.4)),
+    state,
+  ]);
 
   Game() {
     state = new SongSelect();
     bganim = new BackgroundAnimation();
-
-    drawables.add(background);
-    drawables.add(bganim as Drawable);
-    drawables.add(shade);
   }
 
   update(num dt) {
@@ -39,8 +34,7 @@ class Game {
   }
 
   draw() {
-    for (final d in drawables) d.draw();
-    state.draw();
+    stage.draw();
   }
 
   keydown(KeyboardEvent event) => state.keydown(event);
