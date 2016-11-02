@@ -1,13 +1,25 @@
 import 'dart:html';
 
-final CanvasElement canvas = document.getElementById('game');
+import 'color.dart';
 
-main() {
+main() async {
+  final CanvasElement canvas = document.getElementById('game');
+
+  while (true) {
+    await window.animationFrame;
+    clear(canvas);
+    drawNotefield(canvas);
+  }
+}
+
+clear(CanvasElement canvas) {
   canvas.context2D
-    ..fillStyle = 'white'
-    ..fillRect(0, 0, canvas.width, canvas.height)
+    ..fillStyle = Color.white
+    ..fillRect(0, 0, canvas.width, canvas.height);
+}
 
-    ..fillStyle = 'blue'
-    ..fillRect(100, 100, 50, 50)
-    ;
+drawNotefield(CanvasElement canvas) {
+  canvas.context2D
+    ..fillStyle = Color.asphalt.withOpacity(0.8)
+    ..fillRect(200, 0, 50 * 6, canvas.height);
 }
