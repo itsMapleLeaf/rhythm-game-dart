@@ -2,7 +2,7 @@ import 'color.dart';
 import 'graphics.dart';
 import 'util.dart';
 
-class Shape {
+class BGShape {
   num x, y;
 }
 
@@ -13,7 +13,7 @@ class BGAnimation {
   update(num dt) {
     if ((shapeClock += dt) >= 0.3) {
       shapeClock -= 0.3;
-      shapes.add(new Shape()
+      shapes.add(new BGShape()
         ..x = random(0, canvas.width)
         ..y = canvas.height + 100
       );
