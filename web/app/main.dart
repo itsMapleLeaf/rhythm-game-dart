@@ -1,18 +1,30 @@
 import 'dart:html';
 
+import 'bg_animation.dart';
 import 'color.dart';
 import 'notefield.dart';
 import 'graphics.dart';
 
 /// Model representing the game's state
-class GameModel {}
+// class GameModel {}
 
 main() async {
+  final bg = new BGAnimation();
+
+  var time = await window.animationFrame;
+
   while (true) {
-    await window.animationFrame;
+    final now = await window.animationFrame;
+    final elapsed = (now - time) / 1000;
+    time = now;
+
+    bg.update(elapsed);
 
     reset();
     clear(Color.white);
+
+    bg.draw();
+
     layer(() {
       canvas.context2D.translate(250, 0);
       drawNotefield(48, 6, [
