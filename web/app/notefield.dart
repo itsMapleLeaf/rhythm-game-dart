@@ -2,10 +2,18 @@ import 'color.dart';
 import 'graphics.dart';
 
 class NoteField {
-  num leftOffset;
-  num columnWidth;
-  int columnCount;
-  List<Color> columnColors;
+  static const leftOffset = 250;
+  static const columnWidth = 48;
+  static const columnCount = 6;
+
+  static final columnColors = [
+    Color.yellow,
+    Color.white,
+    Color.violet,
+    Color.white,
+    Color.violet,
+    Color.white,
+  ];
 
   get totalWidth => columnWidth * columnCount;
 
