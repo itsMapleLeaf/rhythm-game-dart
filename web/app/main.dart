@@ -1,20 +1,13 @@
 import 'dart:html';
 
-import 'game.dart';
+final CanvasElement canvas = document.getElementById('game');
 
 main() {
-  final game = new Game();
-  num time = 0;
+  canvas.context2D
+    ..fillStyle = 'white'
+    ..fillRect(0, 0, canvas.width, canvas.height)
 
-  frame(final num now) {
-    final elapsed = now - time;
-    time = now;
-    game.update(elapsed / 1000);
-    game.draw();
-    window.requestAnimationFrame(frame);
-  }
-
-  window.requestAnimationFrame(frame);
-  window.onKeyDown.listen(game.keydown);
-  window.onKeyUp.listen(game.keyup);
+    ..fillStyle = 'blue'
+    ..fillRect(100, 100, 50, 50)
+    ;
 }
