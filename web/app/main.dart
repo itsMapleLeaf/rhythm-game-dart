@@ -10,6 +10,17 @@ import 'graphics.dart';
 
 main() async {
   final bg = new BGAnimation();
+  final notefield = new NoteField()
+    ..columnCount = 6
+    ..columnWidth = 48
+    ..columnColors = [
+      Color.yellow,
+      Color.white,
+      Color.violet,
+      Color.white,
+      Color.violet,
+      Color.white,
+    ];
 
   var time = await window.animationFrame;
 
@@ -27,14 +38,7 @@ main() async {
 
     layer(() {
       canvas.context2D.translate(250, 0);
-      drawNotefield(48, 6, [
-        Color.yellow,
-        Color.white,
-        Color.violet,
-        Color.white,
-        Color.violet,
-        Color.white,
-      ]);
+      notefield.draw();
     });
   }
 }
