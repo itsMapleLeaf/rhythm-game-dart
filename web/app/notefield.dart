@@ -31,6 +31,8 @@ class NoteField {
         ctx.translate(columnWidth, 0);
       }
     });
+
+    drawEdges();
   }
 
   drawCover(Color color) {
@@ -48,5 +50,14 @@ class NoteField {
   drawReceptor(Color color) {
     color = color.withOpacity(0.3);
     drawRectangle(0, canvas.height - 100, columnWidth, -24, color);
+  }
+
+  drawEdges() {
+    final color = Color.white.withOpacity(0.8);
+    layer(() {
+      canvas.context2D.translate(leftOffset, 0);
+      drawRectangle(0, 0, -4, canvas.height, color);
+      drawRectangle(totalWidth, 0, 4, canvas.height, color);
+    });
   }
 }
