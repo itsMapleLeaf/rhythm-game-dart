@@ -6,10 +6,6 @@ import 'util.dart';
 class BGShape {
   num x, y, size;
   Color color;
-
-  draw() {
-    drawPolygon(x, y, size, 3, color);
-  }
 }
 
 class BGAnimation {
@@ -46,6 +42,8 @@ class BGAnimation {
   }
 
   draw() {
-    shapes.forEach((shape) => shape.draw());
+    for (final shape in shapes) {
+      drawPolygon(shape.x, shape.y, shape.size, 3, shape.color);
+    }
   }
 }
