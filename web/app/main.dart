@@ -20,6 +20,6 @@ clear(CanvasElement canvas) {
 
 drawNotefield(CanvasElement canvas) {
   canvas.context2D
-    ..fillStyle = Color.asphalt.withOpacity(0.8)
+    ..fillStyle = Color.asphalt.darkenedBy(0.5).withOpacity(0.8)
     ..fillRect(200, 0, 50 * 6, canvas.height);
 }
