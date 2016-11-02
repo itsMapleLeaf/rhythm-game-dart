@@ -1,5 +1,4 @@
 /// Utility class for working with colors
-///
 /// Internally, uses RGBA in 0-1 range
 class Color {
   final num r, g, b, a;
@@ -7,30 +6,31 @@ class Color {
   Color(this.r, this.g, this.b, [this.a = 1]);
 
   /// Returns a new color with its RGB multiplied by a given value
-  Color multipliedBy(num v) {
-    return new Color(r * v, g * v, b * v, a);
+  Color multipliedBy(num value) {
+    return new Color(r * value, g * value, b * value, a);
   }
 
   /// Returns a new color with its alpha multiplied by a given value
-  Color withOpacity(num v) {
-    return new Color(r, g, b, a * v);
+  Color withOpacity(num opacity) {
+    return new Color(r, g, b, a * opacity);
   }
 
   /// Darkens the color by a given amount
-  Color darkenedBy(num v) {
+  Color darkenedBy(num darkness) {
     return new Color(
-      r - r * v,
-      g - g * v,
-      b - b * v,
+      r - r * darkness,
+      g - g * darkness,
+      b - b * darkness,
       a,
     );
   }
 
-  Color lightenedBy(num v) {
+  /// Lightens the color by a given amount
+  Color lightenedBy(num lightness) {
     return new Color(
-      r + (1 - r) * v,
-      g + (1 - g) * v,
-      b + (1 - b) * v,
+      r + (1 - r) * lightness,
+      g + (1 - g) * lightness,
+      b + (1 - b) * lightness,
       a,
     );
   }
@@ -49,7 +49,6 @@ class Color {
   }
 
   /// Returns a color from RGB range 0-255 and alpha range 0-1
-  ///
   /// Example: rgb(50, 50, 255, 0.5) -> a nice semi-transparent blue
   Color.fromRGB(num r, num g, num b, [this.a = 1])
     : r = r / 255,
