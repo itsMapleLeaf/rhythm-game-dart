@@ -11,3 +11,6 @@
 #   rules:
 #     # see catalog here: http://dart-lang.github.io/linter/lints/
 #     - hash_and_equals
+
+analyzer:
+  strong-mode: true
