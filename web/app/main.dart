@@ -10,7 +10,9 @@ import 'graphics.dart';
 
 main() async {
   final bg = new BGAnimation();
+
   final notefield = new NoteField()
+    ..leftOffset = 250
     ..columnCount = 6
     ..columnWidth = 48
     ..columnColors = [
@@ -37,7 +39,6 @@ main() async {
     bg.draw();
 
     layer(() {
-      canvas.context2D.translate(250, 0);
       notefield.draw();
     });
   }

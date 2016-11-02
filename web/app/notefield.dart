@@ -2,6 +2,7 @@ import 'color.dart';
 import 'graphics.dart';
 
 class NoteField {
+  num leftOffset;
   num columnWidth;
   int columnCount;
   List<Color> columnColors;
