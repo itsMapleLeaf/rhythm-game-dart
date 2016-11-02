@@ -1,11 +1,8 @@
-import 'dart:html' show CanvasElement;
-
-import 'color.dart' show Color;
-import 'graphics.dart' show layer, drawRectangle;
+import 'color.dart';
+import 'graphics.dart';
 
 /// Draws the notefield
 drawNotefield(
-  CanvasElement canvas,
   num columnWidth,
   int columnCount,
   List<Color> columnColors,
@@ -13,31 +10,31 @@ drawNotefield(
   final ctx = canvas.context2D;
   final totalWidth = columnWidth * columnCount;
   final coverColor = Color.black;
-  drawCover(canvas, totalWidth, coverColor);
+  drawCover(totalWidth, coverColor);
 
-  layer(canvas, () {
+  layer(() {
     for (int i = 0; i < columnCount; i++) {
-      drawBacklight(canvas, columnWidth, columnColors[i]);
-      drawKey(canvas, columnWidth, columnColors[i]);
-      drawReceptor(canvas, columnWidth, columnColors[i]);
+      drawBacklight(columnWidth, columnColors[i]);
+      drawKey(columnWidth, columnColors[i]);
+      drawReceptor(columnWidth, columnColors[i]);
       ctx.translate(columnWidth, 0);
     }
   });
 }
 
-drawCover(CanvasElement canvas, num width, Color color) {
-  drawRectangle(canvas, 0, 0, width, canvas.height, color.withOpacity(0.8));
+drawCover(num width, Color color) {
+  drawRectangle(0, 0, width, canvas.height, color.withOpacity(0.8));
 }
 
-drawBacklight(CanvasElement canvas, num width, Color color) {
-  drawRectangle(canvas, 0, 0, width, canvas.height, color.withOpacity(0.08));
+drawBacklight(num width, Color color) {
+  drawRectangle(0, 0, width, canvas.height, color.withOpacity(0.08));
 }
 
-drawKey(CanvasElement canvas, num width, Color color) {
-  drawRectangle(canvas, 0, canvas.height, width, -100, color);
+drawKey(num width, Color color) {
+  drawRectangle(0, canvas.height, width, -100, color);
 }
 
-drawReceptor(CanvasElement canvas, num width, Color color) {
+drawReceptor(num width, Color color) {
   color = color.withOpacity(0.3);
-  drawRectangle(canvas, 0, canvas.height - 100, width, -24, color);
+  drawRectangle(0, canvas.height - 100, width, -24, color);
 }
