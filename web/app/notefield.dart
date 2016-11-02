@@ -12,9 +12,10 @@ class NoteField {
   draw() {
     final ctx = canvas.context2D;
     final coverColor = Color.black;
-    drawCover(coverColor);
 
     layer(() {
+      canvas.context2D.translate(leftOffset, 0);
+      drawCover(coverColor);
       for (int i = 0; i < columnCount; i++) {
         drawBacklight(columnColors[i]);
         drawKey(columnColors[i]);
