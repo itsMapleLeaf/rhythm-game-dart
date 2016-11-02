@@ -1,7 +1,7 @@
-import 'dart:html' show window;
+import 'dart:html';
 
-import 'color.dart' show Color;
-import 'notefield.dart' show drawNotefield;
+import 'color.dart';
+import 'notefield.dart';
 import 'graphics.dart';
 
 /// Model representing the game's state
