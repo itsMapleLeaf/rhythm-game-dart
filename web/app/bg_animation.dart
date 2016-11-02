@@ -1,4 +1,5 @@
 import 'color.dart';
+import 'clock.dart';
 import 'graphics.dart';
 import 'util.dart';
 
@@ -8,22 +9,20 @@ class BGShape {
 
 class BGAnimation {
   final shapes = [];
-  num shapeClock = 0;
+  final shapeClock = new Clock(0.3);
 
   update(num dt) {
-    if ((shapeClock += dt) >= 0.3) {
-      shapeClock -= 0.3;
-      shapes.add(new BGShape()
-        ..x = random(0, canvas.width)
-        ..y = canvas.height + 100
-      );
-    }
+    shapeClock.update(dt, addShape);
+    shapes
+      ..forEach((shape) => shape.y -= 100 * dt)
+      ..retainWhere((shape) => shape.y > -100);
+  }
 
-    for (final shape in shapes) {
-      shape.y -= 100 * dt;
-    }
-
-    shapes.retainWhere((shape) => shape.y > -100);
+  addShape() {
+    shapes.add(new BGShape()
+      ..x = random(0, canvas.width)
+      ..y = canvas.height + 100
+    );
   }
 
   draw() {
