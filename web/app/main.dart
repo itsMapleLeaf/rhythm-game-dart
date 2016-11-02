@@ -1,8 +1,8 @@
-import 'dart:html';
+import 'dart:html' show querySelector, CanvasElement, window;
 
-import 'color.dart';
-import 'notefield.dart';
-import 'graphics.dart';
+import 'color.dart' show Color;
+import 'notefield.dart' show drawNotefield;
+import 'graphics.dart' show clear;
 
 /// Model representing the game's state
 class GameModel {}
@@ -20,7 +20,7 @@ main() async {
     ctx..save()..translate(250, 0);
 
     drawNotefield(canvas, 48, 6, [
-      Color.orange,
+      Color.yellow,
       Color.white,
       Color.violet,
       Color.white,
