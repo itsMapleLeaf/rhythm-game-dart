@@ -2,12 +2,13 @@ import 'dart:html';
 
 import 'bg_animation.dart';
 import 'combo_animation.dart';
+import 'game_state.dart';
 import 'graphics.dart';
 import 'judgement_animation.dart';
 import 'notefield.dart';
 import 'song.dart';
 
-class Gameplay {
+class Gameplay implements GameState {
   final bg = new BGAnimation();
   final notefield = new NoteField();
   final song = new Song();

@@ -1,13 +1,14 @@
 import 'dart:html';
 
+import 'game.dart';
 import 'gameplay.dart';
 import 'graphics.dart';
 
 main() async {
-  final gameplay = new Gameplay();
+  Game.pushState(new Gameplay());
 
-  window.onKeyDown.listen(gameplay.keydown);
-  window.onKeyUp.listen(gameplay.keyup);
+  window.onKeyDown.listen(Game.keydown);
+  window.onKeyUp.listen(Game.keyup);
 
   var time = await window.animationFrame;
 
@@ -16,10 +17,10 @@ main() async {
     final elapsed = (now - time) / 1000;
     time = now;
 
-    gameplay.update(elapsed);
+    Game.update(elapsed);
 
     reset();
     clear(Color.white);
-    gameplay.draw();
+    Game.draw();
   }
 }
