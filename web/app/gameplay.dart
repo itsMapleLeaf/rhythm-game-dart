@@ -68,6 +68,46 @@ class JudgementAnimation {
   }
 }
 
+class ComboAnimation {
+  num x, y;
+  num time = 0;
+  int combo = 0;
+
+  ComboAnimation(this.x, this.y);
+
+  num get scale {
+    final delta = util.delta(time, 0, 0.2);
+    final value = util.lerp(0.6, 1, pow(delta, 1 / 3));
+    return value;
+  }
+
+  addCombo(int count) {
+    combo += count;
+    play();
+  }
+
+  reset() {
+    combo = 0;
+  }
+
+  play() {
+    time = 0;
+  }
+
+  update(num dt) {
+    time += dt;
+  }
+
+  draw() {
+    layer(() {
+      canvas.context2D
+        ..translate(x, y)
+        ..scale(scale, scale);
+      drawText(combo.toString(), 0, 0, Color.white, Font.unicaOne(64), 'center');
+    });
+  }
+}
+
 class Gameplay {
   final bg = new BGAnimation();
   final notefield = new NoteField();
@@ -75,6 +115,9 @@ class Gameplay {
 
   final judgementAnimation = new JudgementAnimation(
     NoteField.centerX, canvas.height / 2 + 100);
+
+  final comboAnimation = new ComboAnimation(
+    NoteField.centerX, canvas.height / 2 - 140);
 
   final keybinds = [
     KeyCode.A,
@@ -91,6 +134,7 @@ class Gameplay {
       final judgement = song.checkTap(index);
       if (judgement != Judgement.none) {
         judgementAnimation.play(judgement);
+        comboAnimation.addCombo(1);
       }
     }
   }
@@ -100,17 +144,20 @@ class Gameplay {
   update(num dt) {
     if (song.checkMisses()) {
       judgementAnimation.play(Judgement.miss);
+      comboAnimation.reset();
     }
 
     bg.update(dt);
     notefield.update(dt);
     song.update(dt);
     judgementAnimation.update(dt);
+    comboAnimation.update(dt);
   }
 
   draw() {
     bg.draw();
     notefield.draw(song);
     judgementAnimation.draw();
+    comboAnimation.draw();
   }
 }
