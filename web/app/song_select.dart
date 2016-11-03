@@ -1,36 +1,26 @@
 import 'dart:html' show KeyboardEvent, KeyCode;
-import 'dart:math' show PI;
+// import 'dart:math' show PI;
 
 import 'game.dart';
 import 'graphics.dart';
 import 'util.dart';
 
-class SongSelect implements GameState {
-  final songs = [
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-  ];
-
+class SongWheel {
+  List songs;
   int currentSong = 0;
   num visualOffset = 0;
 
-  keydown(KeyboardEvent event) {
-    if (event.keyCode == KeyCode.UP) {
-      currentSong -= 1;
-      visualOffset = -100;
-    } else if (event.keyCode == KeyCode.DOWN) {
-      currentSong += 1;
-      visualOffset = 100;
-    }
-    currentSong = currentSong % songs.length;
+  SongWheel(this.songs);
+
+  selectNext() {
+    visualOffset = 100;
+    currentSong = (currentSong + 1) % songs.length;
   }
 
-  keyup(KeyboardEvent event) {}
+  selectPrevious() {
+    visualOffset = -100;
+    currentSong = (currentSong - 1) % songs.length;
+  }
 
   update(num dt) {
     visualOffset = lerp(visualOffset, 0, dt * 20);
@@ -51,5 +41,43 @@ class SongSelect implements GameState {
       }
       drawPolygon(600, 126 * currentSong, 20, 3, Color.asphalt);
     });
+  }
+}
+
+class SongSelect implements GameState {
+  final songs = [
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+  ];
+
+  num visualOffset = 0;
+
+  SongWheel wheel;
+
+  SongSelect() {
+    wheel = new SongWheel(songs);
+  }
+
+  keydown(KeyboardEvent event) {
+    if (event.keyCode == KeyCode.UP) {
+      wheel.selectPrevious();
+    } else if (event.keyCode == KeyCode.DOWN) {
+      wheel.selectNext();
+    }
+  }
+
+  keyup(KeyboardEvent event) {}
+
+  update(num dt) {
+    wheel.update(dt);
+  }
+
+  draw() {
+    wheel.draw();
   }
 }
