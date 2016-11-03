@@ -3,29 +3,30 @@ import 'song.dart';
 import 'util.dart';
 
 class NoteFieldColumn {
-  final Color color;
   bool pressed = false;
   num brightness = 0;
+  final Color color;
 
   NoteFieldColumn(this.color);
 }
 
 class NoteField {
-  static const leftOffset = 250;
   static const columnWidth = 48;
-
   static const keyHeight = 100;
+  static const leftOffset = 250;
   static const noteHeight = 24;
   static const noteSpacing = 300;
 
-  static final columns = [
-    new NoteFieldColumn(Color.yellow),
-    new NoteFieldColumn(Color.white),
-    new NoteFieldColumn(Color.violet),
-    new NoteFieldColumn(Color.white),
-    new NoteFieldColumn(Color.violet),
-    new NoteFieldColumn(Color.white),
+  static final columnColors = [
+    Color.yellow,
+    Color.white,
+    Color.violet,
+    Color.white,
+    Color.violet,
+    Color.white,
   ];
+
+  static final columns = columnColors.map((color) => new NoteFieldColumn(color));
 
   static get totalWidth => columnWidth * columns.length;
 
