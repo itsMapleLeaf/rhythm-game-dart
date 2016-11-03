@@ -16,6 +16,7 @@ enum Judgement {
   absolute,
   perfect,
   great,
+  miss,
   none,
 }
 

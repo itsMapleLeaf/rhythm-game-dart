@@ -15,7 +15,7 @@ class Font {
   Font(this.family, this.size);
 
   String toString() {
-    return '$family ${size}px';
+    return '${size}px $family';
   }
 
   static unicaOne(num size) => new Font('Unica One', size);
