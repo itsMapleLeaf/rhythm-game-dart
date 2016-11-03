@@ -35,15 +35,23 @@ class JudgementAnimation {
   }
 
   num get offset {
-    final delta = util.delta(time, 0, 0.3);
-    final value = util.lerp(1, 0, delta);
-    return pow(value, 3) * 30;
+    if (judgement != Judgement.miss) {
+      final delta = util.delta(time, 0, 0.3);
+      final value = util.lerp(1, 0, delta);
+      return pow(value, 3) * 30;
+    } else {
+      return util.lerp(0, 1, util.delta(time, 0, 1)) * 30;
+    }
   }
 
   num get fade {
-    final delta = util.delta(time, 1, 1.2);
-    final value = util.lerp(1, 0, delta);
-    return value;
+    if (judgement != Judgement.miss) {
+      final delta = util.delta(time, 1, 1.2);
+      final value = util.lerp(1, 0, delta);
+      return value;
+    } else {
+      return util.lerp(1, 0, util.delta(time, 0.5, 1));
+    }
   }
 
   play(Judgement judgement) {
