@@ -30,14 +30,14 @@ drawRectangle(num x, num y, num width, num height, Color color) {
 }
 
 /// Draws an equilateral polygon
-drawPolygon(num x, num y, num radius, int sides, Color color) {
+drawPolygon(num x, num y, num radius, int sides, Color color, [num rotation = 0]) {
   final ctx = canvas.context2D;
   ctx.beginPath();
 
   for (var i = 0; i < sides; i++) {
-    final angle = (i / sides) * (PI * 2);
-    final ox = -sin(angle) * radius;
-    final oy = -cos(angle) * radius;
+    final angle = (i / sides) * (PI * 2) + rotation;
+    final ox = cos(angle) * radius;
+    final oy = sin(angle) * radius;
     ctx.lineTo(x + ox, y + oy);
   }
 

@@ -1,3 +1,5 @@
+import 'dart:math' show PI;
+
 import 'clock.dart';
 import 'graphics.dart';
 import 'util.dart';
@@ -45,7 +47,7 @@ class BGAnimation {
 
   draw() {
     for (final shape in shapes) {
-      drawPolygon(shape.x, shape.y, shape.size, 3, shape.color);
+      drawPolygon(shape.x, shape.y, shape.size, 3, shape.color, -PI / 2);
     }
   }
 }
