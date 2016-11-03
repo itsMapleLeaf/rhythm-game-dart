@@ -12,7 +12,6 @@ class Note {
   Note(this.time, this.column);
 }
 
-
 class Song {
   num time = -2;
 

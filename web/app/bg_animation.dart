@@ -31,7 +31,7 @@ class BGAnimation {
   }
 
   addShape() {
-    final size = random(80, 160);
+    final size = random(20, 150);
     final shape = new BGShape()
       ..x = random(0, canvas.width)
       ..y = canvas.height + size
