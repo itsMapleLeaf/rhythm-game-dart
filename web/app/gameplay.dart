@@ -105,7 +105,7 @@ class ComboAnimation {
       canvas.context2D
         ..translate(x, y)
         ..scale(scale, scale);
-      drawText(combo.toString(), 0, 0, Color.white, Font.unicaOne(64), 'center');
+      drawText(combo.toString(), 0, 0, Color.white, Font.unicaOne(72), 'center');
     });
   }
 }
