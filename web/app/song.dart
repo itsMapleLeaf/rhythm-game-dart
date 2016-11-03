@@ -12,7 +12,18 @@ class Note {
   Note(this.time, this.column);
 }
 
+enum Judgement {
+  absolute,
+  perfect,
+  great,
+  none,
+}
+
 class Song {
+  static const timingAbsolute = 20 / 1000;
+  static const timingPerfect = 80 / 1000;
+  static const timingGreat = 150 / 1000;
+
   num time = -2;
 
   List<Note> notes = [
@@ -28,25 +39,33 @@ class Song {
     time += dt;
   }
 
-  checkTap(int column) {
+  Judgement checkTap(int column) {
     final tapped = notes
       .where((note) => note.column == column)
       .where((note) => note.state == NoteState.active)
-      .where((note) => (time - note.time).abs() < 0.1);
+      .where((note) => (time - note.time).abs() <= timingGreat);
 
     if (tapped.isNotEmpty) {
-      tapped.first.state = NoteState.hit;
+      final note = tapped.first;
+      final timing = (time - note.time).abs();
+      note.state = NoteState.hit;
+
+      if (timing <= timingAbsolute) return Judgement.absolute;
+      if (timing <= timingPerfect) return Judgement.perfect;
+      if (timing <= timingGreat) return Judgement.great;
     }
+
+    return Judgement.none;
   }
 
-  checkMisses() {
+  bool checkMisses() {
     final missed = notes
       .where((note) => note.state == NoteState.active)
       .where((note) => time > note.time + 0.1);
 
     if (missed.isNotEmpty) {
       missed.forEach((note) => note.state = NoteState.missed);
-      print('missed');
     }
+    return missed.isNotEmpty;
   }
 }
