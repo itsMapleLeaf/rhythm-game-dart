@@ -21,6 +21,9 @@ class BGAnimation {
   final shapeClock = new Clock(0.15);
 
   update(num dt) {
+    // ignore huge deltas
+    if (dt > 1) return;
+
     shapeClock.update(dt, addShape);
     shapes
       ..forEach((shape) => shape.y -= shape.size * dt)
