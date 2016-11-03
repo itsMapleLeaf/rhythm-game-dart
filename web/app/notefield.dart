@@ -1,5 +1,5 @@
 import 'graphics.dart';
-import 'note.dart';
+import 'song.dart';
 
 class NoteField {
   static const leftOffset = 250;
@@ -21,7 +21,7 @@ class NoteField {
 
   get totalWidth => columnWidth * columnCount;
 
-  draw(List<Note> notes, num songTime) {
+  draw(Song song) {
     final ctx = canvas.context2D;
     final coverColor = Color.black;
 
@@ -39,8 +39,8 @@ class NoteField {
 
       layer(() {
         ctx.translate(0, canvas.height - keyHeight);
-        ctx.translate(0, songTime * noteSpacing);
-        for (final note in notes) {
+        ctx.translate(0, song.time * noteSpacing);
+        for (final note in song.notes) {
           drawNote(note);
         }
       });
