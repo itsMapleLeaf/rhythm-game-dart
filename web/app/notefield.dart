@@ -8,7 +8,7 @@ class NoteField {
 
   static const keyHeight = 100;
   static const noteHeight = 24;
-  static const noteSpacing = 100;
+  static const noteSpacing = 300;
 
   static final columnColors = [
     Color.yellow,
@@ -21,7 +21,7 @@ class NoteField {
 
   get totalWidth => columnWidth * columnCount;
 
-  draw(List<Note> notes) {
+  draw(List<Note> notes, num songTime) {
     final ctx = canvas.context2D;
     final coverColor = Color.black;
 
@@ -38,12 +38,10 @@ class NoteField {
       });
 
       layer(() {
-        ctx.translate(0, canvas.height - 100);
+        ctx.translate(0, canvas.height - keyHeight);
+        ctx.translate(0, songTime * noteSpacing);
         for (final note in notes) {
-          final x = note.column * columnWidth;
-          final y = note.time * noteSpacing;
-          final color = columnColors[note.column];
-          drawRectangle(x, -y, columnWidth, -noteHeight, color);
+          drawNote(note);
         }
       });
 
@@ -81,5 +79,12 @@ class NoteField {
       drawRectangle(0, 0, -4, canvas.height, color);
       drawRectangle(totalWidth, 0, 4, canvas.height, color);
     });
+  }
+
+  drawNote(Note note) {
+    final x = note.column * columnWidth;
+    final y = note.time * noteSpacing;
+    final color = columnColors[note.column];
+    drawRectangle(x, -y, columnWidth, -noteHeight, color);
   }
 }
