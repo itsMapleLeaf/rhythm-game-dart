@@ -2,6 +2,7 @@ import 'dart:html';
 import 'dart:math';
 
 import 'color.dart';
+export 'color.dart';
 
 final CanvasElement canvas = querySelector('#game');
 

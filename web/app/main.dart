@@ -1,7 +1,6 @@
 import 'dart:html';
 
 import 'gameplay.dart';
-import 'color.dart';
 import 'graphics.dart';
 
 main() async {

@@ -1,4 +1,3 @@
-import 'color.dart';
 import 'graphics.dart';
 
 class NoteField {
