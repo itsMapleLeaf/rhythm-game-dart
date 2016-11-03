@@ -82,7 +82,9 @@ class NoteField {
         ctx.translate(0, canvas.height - NoteFieldColumn.keyHeight);
         ctx.translate(0, song.time * NoteFieldColumn.noteSpacing);
         for (final note in song.notes) {
-          columns[note.column].drawNote(note);
+          if (note.state != NoteState.hit) {
+            columns[note.column].drawNote(note);
+          }
         }
       });
 

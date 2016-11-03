@@ -6,6 +6,9 @@ import 'graphics.dart';
 main() async {
   final gameplay = new Gameplay();
 
+  window.onKeyDown.listen(gameplay.keydown);
+  window.onKeyUp.listen(gameplay.keyup);
+
   var time = await window.animationFrame;
 
   while (true) {
