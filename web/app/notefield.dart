@@ -1,25 +1,43 @@
 import 'graphics.dart';
 import 'song.dart';
+import 'util.dart';
+
+class NoteFieldColumn {
+  final Color color;
+  bool pressed = false;
+  num brightness = 0;
+
+  NoteFieldColumn(this.color);
+}
 
 class NoteField {
   static const leftOffset = 250;
   static const columnWidth = 48;
-  static const columnCount = 6;
 
   static const keyHeight = 100;
   static const noteHeight = 24;
   static const noteSpacing = 300;
 
-  static final columnColors = [
-    Color.yellow,
-    Color.white,
-    Color.violet,
-    Color.white,
-    Color.violet,
-    Color.white,
+  static final columns = [
+    new NoteFieldColumn(Color.yellow),
+    new NoteFieldColumn(Color.white),
+    new NoteFieldColumn(Color.violet),
+    new NoteFieldColumn(Color.white),
+    new NoteFieldColumn(Color.violet),
+    new NoteFieldColumn(Color.white),
   ];
 
-  get totalWidth => columnWidth * columnCount;
+  static get totalWidth => columnWidth * columns.length;
+
+  update(num dt) {
+    for (final col in columns) {
+      if (col.pressed) {
+        col.brightness = 1;
+      } else {
+        col.brightness = lerp(col.brightness, 0, dt * 20);
+      }
+    }
+  }
 
   draw(Song song) {
     final ctx = canvas.context2D;
@@ -30,9 +48,9 @@ class NoteField {
       drawCover(coverColor);
 
       layer(() {
-        for (int i = 0; i < columnCount; i++) {
-          drawBacklight(columnColors[i]);
-          drawReceptor(columnColors[i]);
+        for (final column in columns) {
+          drawBacklight(column.color);
+          drawReceptor(column.color);
           ctx.translate(columnWidth, 0);
         }
       });
@@ -46,8 +64,8 @@ class NoteField {
       });
 
       layer(() {
-        for (int i = 0; i < columnCount; i++) {
-          drawKey(columnColors[i]);
+        for (final column in columns) {
+          drawKey(column.color);
           ctx.translate(columnWidth, 0);
         }
       });
@@ -84,7 +102,7 @@ class NoteField {
   drawNote(Note note) {
     final x = note.column * columnWidth;
     final y = note.time * noteSpacing;
-    final color = columnColors[note.column];
+    final color = columns[note.column].color;
     drawRectangle(x, -y, columnWidth, -noteHeight, color);
   }
 }
