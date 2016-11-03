@@ -26,7 +26,9 @@ class NoteField {
     Color.white,
   ];
 
-  static final columns = columnColors.map((color) => new NoteFieldColumn(color));
+  static final columns = columnColors
+    .map((color) => new NoteFieldColumn(color))
+    .toList();
 
   static get totalWidth => columnWidth * columns.length;
 
