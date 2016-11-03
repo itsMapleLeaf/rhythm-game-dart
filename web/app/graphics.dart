@@ -6,6 +6,22 @@ export 'color.dart';
 
 final CanvasElement canvas = querySelector('#game');
 
+/// Utility class for working with fonts
+/// For use with HTML5 canvas
+class Font {
+  final String family;
+  final num size;
+
+  Font(this.family, this.size);
+
+  String toString() {
+    return '$family ${size}px';
+  }
+
+  static unicaOne(num size) => new Font('Unica One', size);
+  static roboto(num size) => new Font('Roboto', size);
+}
+
 /// Draws a rectangle
 drawRectangle(num x, num y, num width, num height, Color color) {
   canvas.context2D
@@ -27,6 +43,15 @@ drawPolygon(num x, num y, num radius, int sides, Color color) {
 
   ctx.fillStyle = color;
   ctx.fill();
+}
+
+/// Draw some text
+drawText(String text, num x, num y, Color color, Font font, [String align = 'center']) {
+  canvas.context2D
+    ..fillStyle = color
+    ..font = font.toString()
+    ..textAlign = align
+    ..fillText(text, x, y);
 }
 
 /// Clear the canvas area to a given color
