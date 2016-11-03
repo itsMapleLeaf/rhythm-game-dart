@@ -51,6 +51,7 @@ class NoteField {
     .toList();
 
   static get totalWidth => NoteFieldColumn.width * columns.length;
+  static get centerX => leftOffset + totalWidth / 2;
 
   update(num dt) {
     for (final col in columns) {

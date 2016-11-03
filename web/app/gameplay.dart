@@ -66,7 +66,7 @@ class Gameplay {
   final song = new Song();
 
   final judgementAnimation = new JudgementAnimation(
-    250 + NoteField.totalWidth / 2, canvas.height / 2 + 100);
+    NoteField.centerX, canvas.height / 2 + 100);
 
   final keybinds = [
     KeyCode.A,
