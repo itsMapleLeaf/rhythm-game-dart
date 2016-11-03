@@ -1,6 +1,7 @@
 import 'dart:html' show KeyboardEvent;
 
 import 'bg_animation.dart';
+import 'graphics.dart';
 
 class Game {
   static final bg = new BGAnimation();
@@ -15,8 +16,10 @@ class Game {
     bg.update(dt);
     currentState.update(dt);
   }
+
   static draw() {
     bg.draw();
+    clear(Color.white.withOpacity(0.6));
     currentState.draw();
   }
 
