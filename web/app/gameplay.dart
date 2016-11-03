@@ -35,7 +35,15 @@ class JudgementAnimation {
   }
 
   num get offset {
-    return pow(util.lerp(1, 0, util.delta(time, 0, 0.3)), 2) * 30;
+    final delta = util.delta(time, 0, 0.3);
+    final value = util.lerp(1, 0, delta);
+    return pow(value, 3) * 30;
+  }
+
+  num get fade {
+    final delta = util.delta(time, 1, 1.2);
+    final value = util.lerp(1, 0, delta);
+    return value;
   }
 
   play() {
@@ -47,7 +55,7 @@ class JudgementAnimation {
   }
 
   draw() {
-    drawText(text, x, y + offset, color, Font.unicaOne(64), 'center');
+    drawText(text, x, y + offset, color.withOpacity(fade), Font.unicaOne(64), 'center');
   }
 }
 
@@ -72,8 +80,8 @@ class Gameplay {
     final index = keybinds.indexOf(event.keyCode);
     if (index > -1) {
       final judgement = song.checkTap(index);
-      judgementAnimation.judgement = judgement;
       if (judgement != Judgement.none) {
+        judgementAnimation.judgement = judgement;
         judgementAnimation.play();
       }
     }
