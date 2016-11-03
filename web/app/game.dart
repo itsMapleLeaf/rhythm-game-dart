@@ -1,7 +1,5 @@
 import 'dart:html' show KeyboardEvent;
 
-import 'game_state.dart';
-
 class Game {
   static List<GameState> states = [];
 
@@ -14,4 +12,11 @@ class Game {
   static draw() => currentState.draw();
   static keydown(KeyboardEvent event) => currentState.keydown(event);
   static keyup(KeyboardEvent event) => currentState.keyup(event);
+}
+
+abstract class GameState {
+  update(num dt);
+  draw();
+  keydown(KeyboardEvent event);
+  keyup(KeyboardEvent event);
 }

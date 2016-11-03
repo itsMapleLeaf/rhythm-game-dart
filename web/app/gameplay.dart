@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'bg_animation.dart';
 import 'combo_animation.dart';
-import 'game_state.dart';
+import 'game.dart';
 import 'graphics.dart';
 import 'judgement_animation.dart';
 import 'notefield.dart';
