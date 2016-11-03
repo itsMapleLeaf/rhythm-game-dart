@@ -81,8 +81,9 @@ class Gameplay {
     if (index > -1) {
       final judgement = song.checkTap(index);
       if (judgement != Judgement.none) {
-        judgementAnimation.judgement = judgement;
-        judgementAnimation.play();
+        judgementAnimation
+          ..judgement = judgement
+          ..play();
       }
     }
   }
@@ -90,10 +91,15 @@ class Gameplay {
   keyup(KeyboardEvent event) {}
 
   update(num dt) {
+    if (song.checkMisses()) {
+      judgementAnimation
+        ..judgement = Judgement.miss
+        ..play();
+    }
+
     bg.update(dt);
     notefield.update(dt);
     song.update(dt);
-    song.checkMisses();
     judgementAnimation.update(dt);
   }
 

@@ -62,11 +62,12 @@ class Song {
   bool checkMisses() {
     final missed = notes
       .where((note) => note.state == NoteState.active)
-      .where((note) => time > note.time + 0.1);
+      .where((note) => time > note.time + timingGreat);
 
     if (missed.isNotEmpty) {
       missed.forEach((note) => note.state = NoteState.missed);
+      return true;
     }
-    return missed.isNotEmpty;
+    return false;
   }
 }
