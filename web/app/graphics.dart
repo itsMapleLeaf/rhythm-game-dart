@@ -46,7 +46,7 @@ drawPolygon(num x, num y, num radius, int sides, Color color) {
 }
 
 /// Draw some text
-drawText(String text, num x, num y, Color color, Font font, [String align = 'center']) {
+drawText(String text, num x, num y, Color color, Font font, [String align = 'left']) {
   canvas.context2D
     ..fillStyle = color
     ..font = font.toString()
