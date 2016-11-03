@@ -1,6 +1,5 @@
 import 'dart:html';
 
-import 'bg_animation.dart';
 import 'combo_animation.dart';
 import 'game.dart';
 import 'graphics.dart';
@@ -9,7 +8,6 @@ import 'notefield.dart';
 import 'song.dart';
 
 class Gameplay implements GameState {
-  final bg = new BGAnimation();
   final notefield = new NoteField();
   final song = new Song();
 
@@ -47,7 +45,6 @@ class Gameplay implements GameState {
       comboAnimation.reset();
     }
 
-    bg.update(dt);
     notefield.update(dt);
     song.update(dt);
     judgementAnimation.update(dt);
@@ -55,7 +52,6 @@ class Gameplay implements GameState {
   }
 
   draw() {
-    bg.draw();
     notefield.draw(song);
     judgementAnimation.draw();
     comboAnimation.draw();
