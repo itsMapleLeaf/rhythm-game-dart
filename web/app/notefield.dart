@@ -3,19 +3,39 @@ import 'song.dart';
 import 'util.dart';
 
 class NoteFieldColumn {
+  static const width = 48;
+  static const keyHeight = 100;
+  static const noteHeight = 24;
+  static const noteSpacing = 300;
+
   bool pressed = false;
   num brightness = 0;
   final Color color;
 
   NoteFieldColumn(this.color);
+
+  drawBacklight() {
+    drawRectangle(0, 0, width, canvas.height, color.withOpacity(0.08));
+  }
+
+  drawKey() {
+    drawRectangle(0, canvas.height, width, -keyHeight, color);
+  }
+
+  drawReceptor() {
+    final color = this.color.withOpacity(0.3);
+    drawRectangle(0, canvas.height - keyHeight, width, -noteHeight, color);
+  }
+
+  drawNote(Note note) {
+    final x = note.column * width;
+    final y = note.time * noteSpacing;
+    drawRectangle(x, -y, width, -noteHeight, color);
+  }
 }
 
 class NoteField {
-  static const columnWidth = 48;
-  static const keyHeight = 100;
   static const leftOffset = 250;
-  static const noteHeight = 24;
-  static const noteSpacing = 300;
 
   static final columnColors = [
     Color.yellow,
@@ -30,7 +50,7 @@ class NoteField {
     .map((color) => new NoteFieldColumn(color))
     .toList();
 
-  static get totalWidth => columnWidth * columns.length;
+  static get totalWidth => NoteFieldColumn.width * columns.length;
 
   update(num dt) {
     for (final col in columns) {
@@ -52,24 +72,24 @@ class NoteField {
 
       layer(() {
         for (final column in columns) {
-          drawBacklight(column.color);
-          drawReceptor(column.color);
-          ctx.translate(columnWidth, 0);
+          column.drawBacklight();
+          column.drawReceptor();
+          ctx.translate(NoteFieldColumn.width, 0);
         }
       });
 
       layer(() {
-        ctx.translate(0, canvas.height - keyHeight);
-        ctx.translate(0, song.time * noteSpacing);
+        ctx.translate(0, canvas.height - NoteFieldColumn.keyHeight);
+        ctx.translate(0, song.time * NoteFieldColumn.noteSpacing);
         for (final note in song.notes) {
-          drawNote(note);
+          columns[note.column].drawNote(note);
         }
       });
 
       layer(() {
         for (final column in columns) {
-          drawKey(column.color);
-          ctx.translate(columnWidth, 0);
+          column.drawKey();
+          ctx.translate(NoteFieldColumn.width, 0);
         }
       });
 
@@ -80,32 +100,11 @@ class NoteField {
   drawCover(Color color) {
     drawRectangle(0, 0, totalWidth, canvas.height, color.withOpacity(0.8));
   }
-
-  drawBacklight(Color color) {
-    drawRectangle(0, 0, columnWidth, canvas.height, color.withOpacity(0.08));
-  }
-
-  drawKey(Color color) {
-    drawRectangle(0, canvas.height, columnWidth, -keyHeight, color);
-  }
-
-  drawReceptor(Color color) {
-    color = color.withOpacity(0.3);
-    drawRectangle(0, canvas.height - keyHeight, columnWidth, -noteHeight, color);
-  }
-
   drawEdges() {
     final color = Color.white.withOpacity(0.8);
     layer(() {
       drawRectangle(0, 0, -4, canvas.height, color);
       drawRectangle(totalWidth, 0, 4, canvas.height, color);
     });
-  }
-
-  drawNote(Note note) {
-    final x = note.column * columnWidth;
-    final y = note.time * noteSpacing;
-    final color = columns[note.column].color;
-    drawRectangle(x, -y, columnWidth, -noteHeight, color);
   }
 }
