@@ -46,7 +46,8 @@ class JudgementAnimation {
     return value;
   }
 
-  play() {
+  play(Judgement judgement) {
+    this.judgement = judgement;
     time = 0;
   }
 
@@ -81,9 +82,7 @@ class Gameplay {
     if (index > -1) {
       final judgement = song.checkTap(index);
       if (judgement != Judgement.none) {
-        judgementAnimation
-          ..judgement = judgement
-          ..play();
+        judgementAnimation.play(judgement);
       }
     }
   }
@@ -92,9 +91,7 @@ class Gameplay {
 
   update(num dt) {
     if (song.checkMisses()) {
-      judgementAnimation
-        ..judgement = Judgement.miss
-        ..play();
+      judgementAnimation.play(Judgement.miss);
     }
 
     bg.update(dt);
