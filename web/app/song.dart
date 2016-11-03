@@ -27,4 +27,15 @@ class Song {
   update(num dt) {
     time += dt;
   }
+
+  checkTap(int column) {
+    final tapped = notes
+      .where((note) => note.column == column)
+      .where((note) => note.state == NoteState.active)
+      .where((note) => (time - note.time).abs() < 0.1);
+
+    if (tapped.isNotEmpty) {
+      tapped.first.state = NoteState.hit;
+    }
+  }
 }
