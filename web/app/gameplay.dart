@@ -99,6 +99,8 @@ class ComboAnimation {
   }
 
   draw() {
+    if (combo == 0) return;
+
     layer(() {
       canvas.context2D
         ..translate(x, y)
