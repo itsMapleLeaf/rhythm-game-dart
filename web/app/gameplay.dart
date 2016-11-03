@@ -28,9 +28,10 @@ class Gameplay {
   keyup(KeyboardEvent event) {}
 
   update(num dt) {
-    song.update(dt);
     bg.update(dt);
     notefield.update(dt);
+    song.update(dt);
+    song.checkMisses();
   }
 
   draw() {

@@ -38,4 +38,15 @@ class Song {
       tapped.first.state = NoteState.hit;
     }
   }
+
+  checkMisses() {
+    final missed = notes
+      .where((note) => note.state == NoteState.active)
+      .where((note) => time > note.time + 0.1);
+
+    if (missed.isNotEmpty) {
+      missed.forEach((note) => note.state = NoteState.missed);
+      print('missed');
+    }
+  }
 }
