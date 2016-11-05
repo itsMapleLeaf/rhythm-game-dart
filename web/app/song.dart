@@ -1,15 +1,30 @@
+/// Enum representing the state of a note
+///
+/// * active: Note is scrolling down, has not been judged.
+/// * hit: Note has been hit and judged.
+/// * missed: Note was missed.
+/// * holding: It's a hold note currently being held down.
 enum NoteState {
   active,
   hit,
   missed,
+  holding,
 }
 
 class Note {
+  /// The time the head of the note is to be tapped
   num time;
+
+  /// Whichever column the note is in
   int column;
+
+  /// The hold length of the note, 0 if it's a tap note
+  num length;
+
+  /// The current state of the note (see [NoteState])
   NoteState state = NoteState.active;
 
-  Note(this.time, this.column);
+  Note(this.time, this.column, this.length);
 }
 
 enum Judgement {
@@ -28,12 +43,12 @@ class Song {
   num time = -2;
 
   List<Note> notes = [
-    new Note(0 / 2, 0),
-    new Note(1 / 2, 1),
-    new Note(2 / 2, 2),
-    new Note(3 / 2, 3),
-    new Note(4 / 2, 4),
-    new Note(5 / 2, 5),
+    new Note(0 / 2, 0, 0.5),
+    new Note(1 / 2, 1, 0.5),
+    new Note(2 / 2, 2, 0.5),
+    new Note(3 / 2, 3, 0.5),
+    new Note(4 / 2, 4, 0.5),
+    new Note(5 / 2, 5, 0.5),
   ];
 
   update(num dt) {
