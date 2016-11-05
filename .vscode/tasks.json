@@ -1,5 +1,7 @@
 {
   "version": "0.1.0",
-  "name": "dev",
-  "command": "make"
+  "command": "make",
+  "args": ["-j", "2"],
+  "isShellCommand": false,
+  "showOutput": "never"
 }

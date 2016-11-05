@@ -1,6 +1,7 @@
-# PUB_COMMAND=pub
-PUB_COMMAND=pub.bat
+default: pub-serve browser-sync
 
-default:
-	$(PUB_COMMAND) serve &
-	browser-sync start --proxy "localhost:8080" --files "web/**"
+pub-serve:
+	pub serve
+
+browser-sync:
+	browser-sync start --proxy localhost:8080 --files web/**
