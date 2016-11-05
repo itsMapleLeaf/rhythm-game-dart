@@ -23,24 +23,32 @@ class SongData {
     new NoteData(5 / 2, 5, 0.0),
   ];
 
+  int get numNotes => notes.length;
+
+  int get numTapNotes => notes.where((note) => note.length == 0).length;
+
+  int get numHolds => notes.where((note) => note.length > 0).length;
+
   SongData(this.title, this.artist);
 }
 
 class SongWheel {
   List<SongData> songs;
-  int currentSong = 0;
+  int currentSongIndex = 0;
   num visualOffset = 0;
 
   SongWheel(this.songs);
 
+  SongData get currentSong => songs[currentSongIndex];
+
   selectNext() {
     visualOffset = 100;
-    currentSong = (currentSong + 1) % songs.length;
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
   }
 
   selectPrevious() {
     visualOffset = -100;
-    currentSong = (currentSong - 1) % songs.length;
+    currentSongIndex = (currentSongIndex - 1) % songs.length;
   }
 
   update(num dt) {
@@ -51,7 +59,7 @@ class SongWheel {
     layer(() {
       canvas.context2D
         ..translate(0, canvas.height / 2)
-        ..translate(0, -126 * currentSong)
+        ..translate(0, -126 * currentSongIndex)
         ..translate(0, visualOffset);
 
       num pos = 0;
@@ -60,7 +68,7 @@ class SongWheel {
         drawText(song.artist, canvas.width / 2, pos + 50, Color.asphalt, Font.roboto(54));
         pos += 126;
       }
-      drawPolygon(600, 126 * currentSong, 20, 3, Color.asphalt);
+      drawPolygon(600, 126 * currentSongIndex, 20, 3, Color.asphalt);
     });
   }
 }
@@ -99,5 +107,22 @@ class SongSelect implements GameState {
 
   draw() {
     wheel.draw();
+
+    final song = wheel.currentSong;
+    final notes = song.numNotes;
+    final taps = song.numTapNotes;
+    final holds = song.numHolds;
+
+    final infoLines =[
+      'NOTE $notes',
+      'TAP $taps',
+      'HOLD $holds',
+    ];
+
+    num pos = canvas.height * 0.3;
+    for (final line in infoLines) {
+      drawText(line, 50, pos, Color.asphalt, Font.roboto(48));
+      pos += 50;
+    }
   }
 }
