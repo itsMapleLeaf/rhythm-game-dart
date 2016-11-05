@@ -1,12 +1,12 @@
 import 'dart:html';
 
 import 'game.dart';
-import 'gameplay.dart';
+// import 'gameplay.dart';
 import 'graphics.dart';
-// import 'song_select.dart';
+import 'song_select.dart';
 
 main() async {
-  Game.pushState(new Gameplay());
+  Game.pushState(new SongSelect());
 
   window.onKeyDown.listen(Game.keydown);
   window.onKeyUp.listen(Game.keyup);

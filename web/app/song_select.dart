@@ -5,8 +5,29 @@ import 'game.dart';
 import 'graphics.dart';
 import 'util.dart';
 
+class NoteData {
+  num time, length;
+  int column;
+  NoteData(this.time, this.column, this.length);
+}
+
+class SongData {
+  String title, artist;
+
+  List<NoteData> notes = [
+    new NoteData(0 / 2, 0, 0.3),
+    new NoteData(1 / 2, 1, 0.3),
+    new NoteData(2 / 2, 2, 0.3),
+    new NoteData(3 / 2, 3, 0.3),
+    new NoteData(4 / 2, 4, 0.3),
+    new NoteData(5 / 2, 5, 0.0),
+  ];
+
+  SongData(this.title, this.artist);
+}
+
 class SongWheel {
-  List songs;
+  List<SongData> songs;
   int currentSong = 0;
   num visualOffset = 0;
 
@@ -23,7 +44,7 @@ class SongWheel {
   }
 
   update(num dt) {
-    visualOffset = lerp(visualOffset, 0, dt * 20);
+    visualOffset = lerp(visualOffset, 0, dt * 15);
   }
 
   draw() {
@@ -35,8 +56,8 @@ class SongWheel {
 
       num pos = 0;
       for (final song in songs) {
-        drawText(song['title'], canvas.width / 2, pos, Color.asphalt, Font.roboto(72));
-        drawText(song['artist'], canvas.width / 2, pos + 50, Color.asphalt, Font.roboto(54));
+        drawText(song.title, canvas.width / 2, pos, Color.asphalt, Font.roboto(72));
+        drawText(song.artist, canvas.width / 2, pos + 50, Color.asphalt, Font.roboto(54));
         pos += 126;
       }
       drawPolygon(600, 126 * currentSong, 20, 3, Color.asphalt);
@@ -46,13 +67,12 @@ class SongWheel {
 
 class SongSelect implements GameState {
   final songs = [
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
-    {'title': 'Random Song Title', 'artist': 'Random Artist'},
+    new SongData('Random Song Title', 'Random Artist'),
+    new SongData('Random Song Title', 'Random Artist'),
+    new SongData('Random Song Title', 'Random Artist'),
+    new SongData('Random Song Title', 'Random Artist'),
+    new SongData('Random Song Title', 'Random Artist'),
+    new SongData('Random Song Title', 'Random Artist'),
   ];
 
   num visualOffset = 0;
