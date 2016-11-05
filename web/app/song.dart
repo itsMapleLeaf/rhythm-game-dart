@@ -40,6 +40,8 @@ class Song {
     time += dt;
   }
 
+  /// Attempt to find a tappable note, update its state, and return the judgement
+  /// given
   Judgement checkTap(int column) {
     final tapped = notes
       .where((note) => note.column == column)
@@ -59,15 +61,16 @@ class Song {
     return Judgement.none;
   }
 
+  /// Find any missed notes
+  ///
+  /// A note is missed when it's passed the maximum timing window at which a note
+  /// can be hit.
   bool checkMisses() {
     final missed = notes
       .where((note) => note.state == NoteState.active)
-      .where((note) => time > note.time + timingGreat);
+      .where((note) => time > note.time + timingGreat)
+      ..forEach((note) => note.state = NoteState.missed);
 
-    if (missed.isNotEmpty) {
-      missed.forEach((note) => note.state = NoteState.missed);
-      return true;
-    }
-    return false;
+    return missed.isNotEmpty;
   }
 }
