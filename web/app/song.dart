@@ -66,7 +66,7 @@ class Song {
     if (tapped.isNotEmpty) {
       final note = tapped.first;
       final timing = (time - note.time).abs();
-      note.state = NoteState.hit;
+      note.state = note.length == 0 ? NoteState.hit : NoteState.holding;
 
       if (timing <= timingAbsolute) return Judgement.absolute;
       if (timing <= timingPerfect) return Judgement.perfect;
@@ -76,16 +76,53 @@ class Song {
     return Judgement.none;
   }
 
-  /// Find any missed notes
+  /// Find any missed notes, returns true if a note was missed
   ///
   /// A note is missed when it's passed the maximum timing window at which a note
   /// can be hit.
   bool checkMisses() {
     final missed = notes
       .where((note) => note.state == NoteState.active)
-      .where((note) => time > note.time + timingGreat)
-      ..forEach((note) => note.state = NoteState.missed);
+      .where((note) => time > note.time + timingGreat);
 
-    return missed.isNotEmpty;
+    if (missed.isNotEmpty) {
+      missed.forEach((note) => note.state = NoteState.missed);
+      return true;
+    }
+    return false;
+  }
+
+  /// Check for a hold break, returns true if a hold was broken
+  bool checkHoldBreak(int column) {
+    final broken = notes
+      .where((note) => note.column == column)
+      .where((note) => note.state == NoteState.holding);
+
+    if (broken.isNotEmpty) {
+      for (final note in broken) {
+        // add some liniency for breaks
+        if (time > note.time + note.length - timingGreat) {
+          note.state = NoteState.hit;
+        } else {
+          note.state = NoteState.missed;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
+  /// Check for successfully held holds
+  /// Returns true if a hold was successfully held
+  bool checkHoldSuccess() {
+    final held = notes
+      .where((note) => note.state == NoteState.holding)
+      .where((note) => time > note.time + note.length);
+
+    if (held.isNotEmpty) {
+      held.forEach((note) => note.state = NoteState.hit);
+      return true;
+    }
+    return false;
   }
 }

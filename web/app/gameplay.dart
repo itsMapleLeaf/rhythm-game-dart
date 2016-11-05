@@ -37,9 +37,17 @@ class Gameplay implements GameState {
     }
   }
 
-  keyup(KeyboardEvent event) {}
+  keyup(KeyboardEvent event) {
+    final index = keybinds.indexOf(event.keyCode);
+    if (index > -1 && song.checkHoldBreak(index)) {
+      judgementAnimation.play(Judgement.miss);
+      comboAnimation.reset();
+    }
+  }
 
   update(num dt) {
+    song.checkHoldSuccess();
+
     if (song.checkMisses()) {
       judgementAnimation.play(Judgement.miss);
       comboAnimation.reset();
