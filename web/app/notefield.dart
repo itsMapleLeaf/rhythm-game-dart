@@ -30,8 +30,9 @@ class NoteFieldColumn {
   drawNote(Note note) {
     final x = note.column * width;
     final y = note.time * noteSpacing;
+    final holdHeight = noteSpacing * note.length + noteHeight;
     drawRectangle(x, -y, width, -noteHeight, color);
-    drawRectangle(x, -y, width, -(noteSpacing * note.length + noteHeight), color.withOpacity(0.5));
+    drawRectangle(x, -y, width, -holdHeight, color.withOpacity(0.5));
   }
 }
 
